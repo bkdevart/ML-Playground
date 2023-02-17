@@ -12,15 +12,6 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-
-                
-                Section (header: Text("When do you want to wake up?")
-                    .font(.headline)) {
-                    }
-
-                }
-            }
-            .navigationBarTitle("BetterRest")
+        }
         }
     }
