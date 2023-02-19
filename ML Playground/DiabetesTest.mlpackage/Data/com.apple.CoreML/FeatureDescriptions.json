@@ -1,0 +1,39 @@
+{
+  "Outputs" : {
+    "Outcome" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "OutcomeProbability" : {
+      "MLFeatureShortDescription" : "--"
+    }
+  },
+  "Inputs" : {
+    "BloodPressure" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "Pregnancies" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "DiabetesPedigreeFunction" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "SkinThickness" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "Glucose" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "Insulin" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "BMI" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "Age" : {
+      "MLFeatureShortDescription" : "--"
+    }
+  },
+  "TrainingInputs" : {
+
+  }
+}

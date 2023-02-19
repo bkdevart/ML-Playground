@@ -13,7 +13,7 @@
 		CAFF963F299F28120059C078 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAFF963E299F28120059C078 /* Preview Assets.xcassets */; };
 		CAFF9641299F28120059C078 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9640299F28120059C078 /* Persistence.swift */; };
 		CAFF9644299F28120059C078 /* ML_Playground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9642299F28120059C078 /* ML_Playground.xcdatamodeld */; };
-		CAFF964B299FB9FA0059C078 /* DiabetesTest.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CAFF964A299FB9FA0059C078 /* DiabetesTest.mlmodel */; };
+		CAFF964D29A022E70059C078 /* DiabetesTest.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = CAFF964C29A022E70059C078 /* DiabetesTest.mlpackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +24,7 @@
 		CAFF963E299F28120059C078 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CAFF9640299F28120059C078 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		CAFF9643299F28120059C078 /* ML_Playground.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ML_Playground.xcdatamodel; sourceTree = "<group>"; };
-		CAFF964A299FB9FA0059C078 /* DiabetesTest.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DiabetesTest.mlmodel; sourceTree = "<group>"; };
+		CAFF964C29A022E70059C078 /* DiabetesTest.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = DiabetesTest.mlpackage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 		CAFF9636299F28110059C078 /* ML Playground */ = {
 			isa = PBXGroup;
 			children = (
-				CAFF964A299FB9FA0059C078 /* DiabetesTest.mlmodel */,
+				CAFF964C29A022E70059C078 /* DiabetesTest.mlpackage */,
 				CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */,
 				CAFF9639299F28110059C078 /* ContentView.swift */,
 				CAFF963B299F28120059C078 /* Assets.xcassets */,
@@ -148,8 +148,8 @@
 			files = (
 				CAFF9641299F28120059C078 /* Persistence.swift in Sources */,
 				CAFF963A299F28110059C078 /* ContentView.swift in Sources */,
-				CAFF964B299FB9FA0059C078 /* DiabetesTest.mlmodel in Sources */,
 				CAFF9638299F28110059C078 /* ML_PlaygroundApp.swift in Sources */,
+				CAFF964D29A022E70059C078 /* DiabetesTest.mlpackage in Sources */,
 				CAFF9644299F28120059C078 /* ML_Playground.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
