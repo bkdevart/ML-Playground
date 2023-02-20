@@ -7,6 +7,14 @@
 import SwiftUI
 import CoreML
 
+// FEATURE IDEAS
+/*
+ 1. Implement a scaler into the input, so that the user can choose realistic values for themselves
+ 2. Play with data visualization libraries to show density, etc
+ 3. Create more advanced visualizations with feature importances
+ 4. Make ability to train on more data? (much later)
+ */
+
 struct ContentView: View {
 //    @State private var wakeUp = Date.now
 //    @State private var sleepAmount = 8.0
@@ -42,43 +50,67 @@ struct ContentView: View {
                     HStack {
                         Text("Pregnancy: \(pregnancies)")
                         Slider(value: $pregnancies, in: -2...4, step: 0.05)
+                            .onChange(of: pregnancies) { _ in
+                                calculateDiabetes()
+                            }
                     }
                     
                     HStack {
                         Text("Glucose: \(glucose)")
                         Slider(value: $glucose, in: -4...3, step: 0.05)
+                            .onChange(of: glucose) { _ in
+                                calculateDiabetes()
+                            }
                     }
                     
                     HStack {
                         Text("Blood Pressure: \(bloodPressure)")
                         Slider(value: $bloodPressure, in: -4...3, step: 0.05)
+                            .onChange(of: bloodPressure) { _ in
+                                calculateDiabetes()
+                            }
                     }
 
                     HStack {
                         Text("Skin Thickness: \(skinThickness)")
                         Slider(value: $skinThickness, in: -2...5, step: 0.05)
+                            .onChange(of: skinThickness) { _ in
+                                calculateDiabetes()
+                            }
                     }
                 }
                 Group {
                     HStack {
                         Text("Insulin: \(insulin)")
                         Slider(value: $insulin, in: -1...7, step: 0.05)
+                            .onChange(of: insulin) { _ in
+                                calculateDiabetes()
+                            }
                     }
                     
                     HStack {
                         Text("BMI: \(BMI)")
                         Slider(value: $BMI, in: -4...5, step: 0.05)
+                            .onChange(of: BMI) { _ in   // can also be newBMI in BMI if you need value
+                                calculateDiabetes()
+                            }
                     }
                     
                     HStack {
                         Text("Diabetes Pedigree Function: \(diabetesPedigreeFunction)")
                         Slider(value: $diabetesPedigreeFunction, in: -2...6, step: 0.05)
+                            .onChange(of: diabetesPedigreeFunction) { _ in
+                                calculateDiabetes()
+                            }
                     }
                     
                     HStack {
                         Text("Age: \(Age)")
                         Slider(value: $Age, in: -1...4, step: 0.05)
 //                            .onChange(of: Age, perform: calculateDiabetes)
+                            .onChange(of: Age) { _ in
+                                calculateDiabetes()
+                            }
                     }
                     
                 }
@@ -87,9 +119,9 @@ struct ContentView: View {
             }
             .navigationTitle("Diabetes Test")
             .padding([.horizontal])
-            .toolbar {
-                Button("Calculate", action: calculateDiabetes)
-            }
+//            .toolbar {
+//                Button("Calculate", action: calculateDiabetes)
+//            }
         }
     }
     
