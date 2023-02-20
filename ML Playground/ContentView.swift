@@ -6,13 +6,17 @@
 
 import SwiftUI
 import CoreML
+import CreateMLComponents
 
 // FEATURE IDEAS
 /*
  1. Implement a scaler into the input, so that the user can choose realistic values for themselves
+    a. https://developer.apple.com/documentation/createml/creating_a_model_from_tabular_data
+    b. https://navsin.medium.com/predictive-modeling-and-forecasting-with-swiftui-3d2b693b9dca
  2. Play with data visualization libraries to show density, etc
  3. Create more advanced visualizations with feature importances
  4. Make ability to train on more data? (much later)
+    a. My current understanding is that this can't be done, but verify
  */
 
 struct ContentView: View {
