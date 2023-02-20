@@ -82,6 +82,7 @@ struct ContentView: View {
                     }
                     
                 }
+                Text("Note: values are scaled currently")
                 Spacer()
             }
             .navigationTitle("Diabetes Test")

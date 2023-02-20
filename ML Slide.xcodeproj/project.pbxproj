@@ -14,10 +14,11 @@
 		CAFF9641299F28120059C078 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9640299F28120059C078 /* Persistence.swift */; };
 		CAFF9644299F28120059C078 /* ML_Playground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9642299F28120059C078 /* ML_Playground.xcdatamodeld */; };
 		CAFF964D29A022E70059C078 /* DiabetesTest.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = CAFF964C29A022E70059C078 /* DiabetesTest.mlpackage */; };
+		CAFF964F29A39D410059C078 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CAFF964E29A39D410059C078 /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CAFF9634299F28110059C078 /* ML Playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ML Playground.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAFF9634299F28110059C078 /* ML Slide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ML Slide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ML_PlaygroundApp.swift; sourceTree = "<group>"; };
 		CAFF9639299F28110059C078 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAFF963B299F28120059C078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -25,6 +26,7 @@
 		CAFF9640299F28120059C078 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		CAFF9643299F28120059C078 /* ML_Playground.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ML_Playground.xcdatamodel; sourceTree = "<group>"; };
 		CAFF964C29A022E70059C078 /* DiabetesTest.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = DiabetesTest.mlpackage; sourceTree = "<group>"; };
+		CAFF964E29A39D410059C078 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +51,7 @@
 		CAFF9635299F28110059C078 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CAFF9634299F28110059C078 /* ML Playground.app */,
+				CAFF9634299F28110059C078 /* ML Slide.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,6 +63,7 @@
 				CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */,
 				CAFF9639299F28110059C078 /* ContentView.swift */,
 				CAFF963B299F28120059C078 /* Assets.xcassets */,
+				CAFF964E29A39D410059C078 /* icon.png */,
 				CAFF9640299F28120059C078 /* Persistence.swift */,
 				CAFF9642299F28120059C078 /* ML_Playground.xcdatamodeld */,
 				CAFF963D299F28120059C078 /* Preview Content */,
@@ -79,9 +82,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CAFF9633299F28110059C078 /* ML Playground */ = {
+		CAFF9633299F28110059C078 /* ML Slide */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CAFF9647299F28120059C078 /* Build configuration list for PBXNativeTarget "ML Playground" */;
+			buildConfigurationList = CAFF9647299F28120059C078 /* Build configuration list for PBXNativeTarget "ML Slide" */;
 			buildPhases = (
 				CAFF9630299F28110059C078 /* Sources */,
 				CAFF9631299F28110059C078 /* Frameworks */,
@@ -91,9 +94,9 @@
 			);
 			dependencies = (
 			);
-			name = "ML Playground";
+			name = "ML Slide";
 			productName = "ML Playground";
-			productReference = CAFF9634299F28110059C078 /* ML Playground.app */;
+			productReference = CAFF9634299F28110059C078 /* ML Slide.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -111,7 +114,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CAFF962F299F28110059C078 /* Build configuration list for PBXProject "ML Playground" */;
+			buildConfigurationList = CAFF962F299F28110059C078 /* Build configuration list for PBXProject "ML Slide" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -124,7 +127,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CAFF9633299F28110059C078 /* ML Playground */,
+				CAFF9633299F28110059C078 /* ML Slide */,
 			);
 		};
 /* End PBXProject section */
@@ -135,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAFF963F299F28120059C078 /* Preview Assets.xcassets in Resources */,
+				CAFF964F29A39D410059C078 /* icon.png in Resources */,
 				CAFF963C299F28120059C078 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,7 +336,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CAFF962F299F28110059C078 /* Build configuration list for PBXProject "ML Playground" */ = {
+		CAFF962F299F28110059C078 /* Build configuration list for PBXProject "ML Slide" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CAFF9645299F28120059C078 /* Debug */,
@@ -341,7 +345,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CAFF9647299F28120059C078 /* Build configuration list for PBXNativeTarget "ML Playground" */ = {
+		CAFF9647299F28120059C078 /* Build configuration list for PBXNativeTarget "ML Slide" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CAFF9648299F28120059C078 /* Debug */,
