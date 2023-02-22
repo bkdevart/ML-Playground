@@ -31,6 +31,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
+//                NavigationLink("Graphs", destination: StarterGraphs())
                 Spacer()
                 Text("Classification Result")
                     .font(.headline)
@@ -111,9 +112,10 @@ struct ContentView: View {
             }
             .navigationTitle("Diabetes Test")
             .padding([.horizontal])
-//            .toolbar {
+            .toolbar {
 //                Button("Calculate", action: calculateDiabetes)
-//            }
+                NavigationLink("Graphs", destination: StarterGraphs())
+            }
         }
     }
     
