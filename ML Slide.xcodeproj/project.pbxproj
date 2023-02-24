@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CA54D90829A40AB7000C0C36 /* DiabetesTest.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CA54D90729A40AB7000C0C36 /* DiabetesTest.mlmodel */; };
 		CA54D90A29A5928B000C0C36 /* StarterGraphs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54D90929A5928B000C0C36 /* StarterGraphs.swift */; };
+		CA54D90F29A8418A000C0C36 /* diabetes.json in Resources */ = {isa = PBXBuildFile; fileRef = CA54D90E29A8418A000C0C36 /* diabetes.json */; };
 		CAFF9638299F28110059C078 /* ML_PlaygroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */; };
 		CAFF963A299F28110059C078 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9639299F28110059C078 /* ContentView.swift */; };
 		CAFF963C299F28120059C078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAFF963B299F28120059C078 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		CA54D90729A40AB7000C0C36 /* DiabetesTest.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DiabetesTest.mlmodel; sourceTree = "<group>"; };
 		CA54D90929A5928B000C0C36 /* StarterGraphs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterGraphs.swift; sourceTree = "<group>"; };
+		CA54D90E29A8418A000C0C36 /* diabetes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = diabetes.json; sourceTree = "<group>"; };
 		CAFF9634299F28110059C078 /* ML Slide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ML Slide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ML_PlaygroundApp.swift; sourceTree = "<group>"; };
 		CAFF9639299F28110059C078 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			children = (
 				CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */,
 				CAFF9639299F28110059C078 /* ContentView.swift */,
+				CA54D90E29A8418A000C0C36 /* diabetes.json */,
 				CA54D90929A5928B000C0C36 /* StarterGraphs.swift */,
 				CA54D90729A40AB7000C0C36 /* DiabetesTest.mlmodel */,
 				CAFF963B299F28120059C078 /* Assets.xcassets */,
@@ -142,6 +145,7 @@
 			files = (
 				CAFF963F299F28120059C078 /* Preview Assets.xcassets in Resources */,
 				CAFF964F29A39D410059C078 /* icon.png in Resources */,
+				CA54D90F29A8418A000C0C36 /* diabetes.json in Resources */,
 				CAFF963C299F28120059C078 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
