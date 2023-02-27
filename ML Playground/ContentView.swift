@@ -8,12 +8,18 @@ import SwiftUI
 import CoreML
 import CreateMLComponents
 
-// FEATURE IDEAS
+
 /*
+ FEATURE IDEAS
  1. Play with data visualization libraries to show density, etc
  2. Create more advanced visualizations with feature importances
  3. Make ability to train on more data? (much later)
     a. My current understanding is that this can't be done, but verify
+ 
+ BUGS
+ 1. When submitting to TestFlight
+    a. The provided entity includes a relationship with an invalid value
+    b. '' not a valid id for the relatsionship 'build' (ID: d300770c-d5cb-46e6-ab2f-444845d0be6f)
  */
 
 struct ContentView: View {
@@ -28,10 +34,11 @@ struct ContentView: View {
     @State private var diabetesPedigreeFunction = 0.5
     @State private var Age = 21.0
     
+    let shared = UIJoin.shared
+    
     var body: some View {
         NavigationView {
             VStack {
-//                NavigationLink("Graphs", destination: StarterGraphs())
                 Spacer()
                 Text("Classification Result")
                     .font(.headline)
@@ -113,8 +120,10 @@ struct ContentView: View {
             .navigationTitle("Diabetes Test")
             .padding([.horizontal])
             .toolbar {
-//                Button("Calculate", action: calculateDiabetes)
                 NavigationLink("Graphs", destination: StarterGraphs())
+            }
+            .onAppear {
+                shared.loadData()
             }
         }
     }
