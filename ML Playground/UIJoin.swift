@@ -21,8 +21,11 @@ struct Pima: Codable, Identifiable {
     let DiabetesPedigreeFunction: Float
     let Age: Float
     let Outcome: Float
+    
+    // TODO: see if you can get this formatted to 2 decimal places
+    var BMIString: String { BMI.formatted(.number) }
+    var GlucoseString: String { Glucose.formatted(.number) }
 }
-
 
 
 class UIJoin: ObservableObject {
@@ -30,26 +33,74 @@ class UIJoin: ObservableObject {
     @Published var pima = [Pima]()
     @Published var filteredBMI = [Pima]()
     @Published var filteredGlucose = [Pima]()
+    @Published var filteredTable = [Pima]()
     
-    @Published var filterBMI = Float()
-    @Published var filterGlucose = Float()
-
+    @Published var filterBMI = Float(75)  // Float()
+    @Published var filterGlucose = Float(200)  // Float()
     
     public func loadBMIFilter() {
-        var filteredBMIData: [Pima] {
-            pima.filter{ $0.BMI <= filterBMI }
-        }
-        filteredBMI = filteredBMIData
+        filteredBMI = pima.filter{ $0.BMI <= filterBMI }
     }
     
     public func loadGlucoseFilter() {
-        var filteredGlucoseData: [Pima] {
-            pima.filter{ $0.Glucose <= filterGlucose }
-        }
-        filteredGlucose = filteredGlucoseData
+        filteredGlucose = pima.filter{ $0.Glucose <= filterGlucose }
     }
     
-    public func loadBMI() -> some View {
+    public func getFilterBMITable() -> some View  {
+        let filteredTable = pima.filter { $0.id < 5 }
+        var body: some View {
+            Table(filteredTable) {
+                // String(format:"%.2f", myFloat)
+                TableColumn("BMI", value: \.BMIString)
+                // 2nd column not visible in iOS, unless you tweak
+                // https://developer.apple.com/documentation/SwiftUI/Table
+                // TableColumn("Glucose", value: \.GlucoseString)
+            }
+        }
+        return body
+    }
+    
+    public func getBMIMean() -> String {
+        let totalSum = filteredBMI.map({$0.BMI}).reduce(0, +)
+        let totalCount = filteredBMI.count
+        let mean = String(format: "%.2f", totalSum / Float(totalCount))
+        return mean
+    }
+    
+    public func getBMICount() -> Int {
+        return filteredBMI.count
+    }
+    
+    public func getGlucoseMean() -> String {
+        let totalSum = filteredGlucose.map({$0.Glucose}).reduce(0, +)
+        let totalCount = filteredGlucose.count
+        let mean = String(format: "%.2f", totalSum / Float(totalCount))
+        return mean
+    }
+    
+    public func getGlucoseCount() -> Int {
+        return filteredGlucose.count
+    }
+    
+
+    
+    public func getFilterGlucoseTable() -> some View  {
+        let filteredTable = pima.filter { $0.id < 5 }
+        var body: some View {
+            Table(filteredTable) {
+                // String(format:"%.2f", myFloat)
+                TableColumn("Glucose", value: \.GlucoseString)
+            }
+        }
+        // TODO: calculate average Glucose value in filtered data
+//        ForEach(filteredGlucose) { shape in
+//
+//        }
+//        pima.Glucose.reduce(0, +)
+        return body
+    }
+    
+    public func showBMI() -> some View {
         Chart {
             ForEach(filteredBMI) { shape in
                 PointMark(
@@ -60,6 +111,8 @@ class UIJoin: ObservableObject {
             }
         }
     }
+    
+
     
     public func loadGlucose() -> some View {
         let barChart = Chart {

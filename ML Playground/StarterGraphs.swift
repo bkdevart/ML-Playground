@@ -10,7 +10,10 @@ import Charts
 import UniformTypeIdentifiers
 
 
+
+
 struct StarterGraphs: View {
+    
     
     let controls = UIJoin.shared
     @State private var filterBMI = 75.0 // using a value that is not exceeded in chart to start, set to max later
@@ -18,11 +21,21 @@ struct StarterGraphs: View {
     
     var body: some View {
         TabView {
-            // Glucose chart
+            
+            // summary stats
             VStack {
+                Text("Glucose")
+                    .font(.largeTitle)
+                Group {
+                    Text("Samples: \(controls.getGlucoseCount())")
+                    Text("Mean: \(controls.getGlucoseMean())")
+                }
+                .font(.body)
                 controls.loadGlucose()
+                    .padding()
+                // Glucose chart
                 HStack {
-                    Text("Glucose: \(String(format: "%.f", filterGlucose))")
+                    Text("Max value: \(String(format: "%.f", filterGlucose))")
                         .font(.body)
                     Slider(value: $filterGlucose, in: 0...200, step: 1)
                         .onChange(of: filterGlucose) { _ in
@@ -40,7 +53,19 @@ struct StarterGraphs: View {
             
             // BMI chart
             VStack {
-                controls.loadBMI()
+                Text("BMI")
+                    .font(.largeTitle)
+                // summary stats
+                Group {
+                    Text("Samples: \(controls.getBMICount())")
+                    Text("BMI Mean: \(controls.getBMIMean())")
+                }
+                .font(.body)
+                // chart
+                controls.showBMI()
+                    .padding()
+                
+                // slider
                 HStack {
                     Text("BMI: \(String(format: "%.f", filterBMI))")
                         .font(.body)
@@ -58,10 +83,10 @@ struct StarterGraphs: View {
                 Text("BMI")
             }
         }
-//        .onAppear(perform: {
+        .onAppear(perform: {
 //            controls.loadBMIFilter()
 //            controls.loadGlucoseFilter()
-//        })
+        })
     }
 }
 
