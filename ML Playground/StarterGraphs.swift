@@ -13,22 +13,39 @@ import UniformTypeIdentifiers
 struct StarterGraphs: View {
     
     let controls = UIJoin.shared
+    @State private var filterBMI = 75.0 // using a value that is not exceeded in chart to start, set to max later
+    @State private var filterGlucose = 200.0 // ditto above
     
     var body: some View {
         TabView {
-            controls.loadBMI()
-                .font(.system(size: 30, weight: .bold, design: .rounded))
-                    .tabItem {
-                        Image(systemName: "chart.dots.scatter")
-                        Text("BMI")
+            // Glucose chart
+            VStack {
+                controls.loadGlucose()
+                    
+                Slider(value: $filterGlucose, in: 0...200, step: 1)
+                    .onChange(of: filterGlucose) { _ in
+                        //                    filterGlucose()
                     }
+            }
+            .font(.system(size: 30, weight: .bold, design: .rounded))
+            .tabItem {
+                Image(systemName: "chart.dots.scatter")
+                Text("Glucose")
+            }
             
-            controls.loadGlucose()
-                .font(.system(size: 30, weight: .bold, design: .rounded))
-                .tabItem {
-                    Image(systemName: "chart.dots.scatter")
-                    Text("Glucose")
-                }
+            // BMI chart
+            VStack {
+                controls.loadBMI()
+                Slider(value: $filterBMI, in: 0...75, step: 1)
+                    .onChange(of: filterBMI) { _ in
+                        //                    filterBMI()
+                    }
+            }
+            .font(.system(size: 30, weight: .bold, design: .rounded))
+            .tabItem {
+                Image(systemName: "chart.dots.scatter")
+                Text("BMI")
+            }
         }
     }
 }
