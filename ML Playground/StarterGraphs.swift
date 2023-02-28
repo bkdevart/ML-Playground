@@ -21,11 +21,16 @@ struct StarterGraphs: View {
             // Glucose chart
             VStack {
                 controls.loadGlucose()
-                    
-                Slider(value: $filterGlucose, in: 0...200, step: 1)
-                    .onChange(of: filterGlucose) { _ in
-                        //                    filterGlucose()
-                    }
+                HStack {
+                    Text("Glucose: \(String(format: "%.f", filterGlucose))")
+                        .font(.body)
+                    Slider(value: $filterGlucose, in: 0...200, step: 1)
+                        .onChange(of: filterGlucose) { _ in
+                            controls.filterGlucose = Float(filterGlucose)  // store value so it can be used to filter data
+                            controls.loadGlucoseFilter()  // update data for graphs with filter
+                        }
+                }
+                .padding()
             }
             .font(.system(size: 30, weight: .bold, design: .rounded))
             .tabItem {
@@ -36,10 +41,16 @@ struct StarterGraphs: View {
             // BMI chart
             VStack {
                 controls.loadBMI()
-                Slider(value: $filterBMI, in: 0...75, step: 1)
-                    .onChange(of: filterBMI) { _ in
-                        //                    filterBMI()
-                    }
+                HStack {
+                    Text("BMI: \(String(format: "%.f", filterBMI))")
+                        .font(.body)
+                    Slider(value: $filterBMI, in: 0...75, step: 1)
+                        .onChange(of: filterBMI) { _ in
+                            controls.filterBMI = Float(filterBMI)
+                            controls.loadBMIFilter()
+                        }
+                }
+                .padding()
             }
             .font(.system(size: 30, weight: .bold, design: .rounded))
             .tabItem {
@@ -47,6 +58,10 @@ struct StarterGraphs: View {
                 Text("BMI")
             }
         }
+//        .onAppear(perform: {
+//            controls.loadBMIFilter()
+//            controls.loadGlucoseFilter()
+//        })
     }
 }
 

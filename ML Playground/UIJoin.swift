@@ -23,19 +23,35 @@ struct Pima: Codable, Identifiable {
     let Outcome: Float
 }
 
+
+
 class UIJoin: ObservableObject {
     @Published var data = Data()
     @Published var pima = [Pima]()
+    @Published var filteredBMI = [Pima]()
+    @Published var filteredGlucose = [Pima]()
     
+    @Published var filterBMI = Float()
+    @Published var filterGlucose = Float()
 
-
+    
+    public func loadBMIFilter() {
+        var filteredBMIData: [Pima] {
+            pima.filter{ $0.BMI <= filterBMI }
+        }
+        filteredBMI = filteredBMIData
+    }
+    
+    public func loadGlucoseFilter() {
+        var filteredGlucoseData: [Pima] {
+            pima.filter{ $0.Glucose <= filterGlucose }
+        }
+        filteredGlucose = filteredGlucoseData
+    }
     
     public func loadBMI() -> some View {
-        
-    
-                           
         Chart {
-            ForEach(pima) { shape in
+            ForEach(filteredBMI) { shape in
                 PointMark(
                     x: .value("BMI", shape.id),
                     y: .value("Value", shape.BMI)
@@ -47,7 +63,7 @@ class UIJoin: ObservableObject {
     
     public func loadGlucose() -> some View {
         let barChart = Chart {
-            ForEach(pima) { shape in
+            ForEach(filteredGlucose) { shape in
                 PointMark(
                     x: .value("Glucose", shape.id),
                     y: .value("Value", shape.Glucose)
@@ -55,18 +71,14 @@ class UIJoin: ObservableObject {
                 .foregroundStyle(by: .value("Diabetes", shape.Outcome))
             }
         }
-        
+//            .chartYScale(range: 0...200)  // change this to max later
         return barChart
     }
     
     public func loadData() {
         if let localData = readLocalFile(forName: "diabetes") {
             parse(jsonData: localData)
-
             print("File found!")
-//            data = localData
-            // TODO: do I need to do additional assignments here?
-            
         } else {
             print("File not found")
         }
