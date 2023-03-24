@@ -29,7 +29,7 @@ struct Pima: Codable, Identifiable {
 
 
 class UIJoin: ObservableObject {
-    @Published var data = Data()
+//    @Published var data = Data()  // is this needed?
     @Published var pima = [Pima]()
     @Published var filteredBMI = [Pima]()
     @Published var filteredGlucose = [Pima]()
