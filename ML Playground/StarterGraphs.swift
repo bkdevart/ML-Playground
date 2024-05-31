@@ -14,7 +14,6 @@ import UniformTypeIdentifiers
 
 struct StarterGraphs: View {
     
-    
     let controls = UIJoin.shared
     @State private var filterBMI = 75.0 // using a value that is not exceeded in chart to start, set to max later
     @State private var filterGlucose = 200.0 // ditto above
