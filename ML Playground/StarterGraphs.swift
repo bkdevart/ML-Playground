@@ -9,9 +9,6 @@ import SwiftUI
 import Charts
 import UniformTypeIdentifiers
 
-
-
-
 struct StarterGraphs: View {
     
     let controls = UIJoin.shared
