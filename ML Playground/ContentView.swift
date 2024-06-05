@@ -39,12 +39,12 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
+                shared.loadGlucose()
                 Text("Classification Result")
                     .font(.headline)
                 Text("\(predictionValue)")
                     .font(.largeTitle)
-                Spacer()
+                
 
                 Text("Choose feature values")
                     .font(.headline)
@@ -61,6 +61,8 @@ struct ContentView: View {
                         Text("Glucose: \(String(format: "%.f", glucose))")
                         Slider(value: $glucose, in: 0...200, step: 5)
                             .onChange(of: glucose) { _ in
+                                shared.filterGlucose = Float(glucose)  // store value so it can be used to filter data
+                                shared.loadGlucoseFilter()  // update data for graphs with filter
                                 calculateDiabetes()
                             }
                     }
