@@ -35,15 +35,29 @@ class UIJoin: ObservableObject {
     @Published var filteredGlucose = [Pima]()
     @Published var filteredTable = [Pima]()
     
-    @Published var filterBMI = Float(75)  // Float()
-    @Published var filterGlucose = Float(200)  // Float()
+    @Published var filterBMI = Float(75)
+    @Published var filterGlucose = Float(200)
+    @Published var filterBloodPressure = Float(70)
+    @Published var filterSkinThickness = Float(50)
+    @Published var filterInsulin = Float(440)
+    @Published var filterPregancies = Float(2)
+    @Published var filterdiabetesPedigreeFunction = Float(0.50)
+    @Published var filterAge = Float(21)
     
     public func loadBMIFilter() {
         filteredBMI = pima.filter{ $0.BMI <= filterBMI }
     }
     
-    public func loadGlucoseFilter() {
-        filteredGlucose = pima.filter{ $0.Glucose <= filterGlucose }
+    // TODO: make this filter function for all sliders
+    public func loadFilters() {
+        filteredTable = pima.filter{ $0.Pregnancies <= filterPregancies }
+        filteredTable = filteredTable.filter{ $0.Glucose <= filterGlucose }
+        filteredTable = filteredTable.filter{ $0.BloodPressure <= filterBloodPressure }
+        filteredTable = filteredTable.filter{ $0.SkinThickness <= filterSkinThickness }
+        filteredTable = filteredTable.filter{ $0.Insulin <= filterInsulin }
+        filteredTable = filteredTable.filter{ $0.BMI <= filterBMI }
+        filteredTable = filteredTable.filter{ $0.DiabetesPedigreeFunction <= filterdiabetesPedigreeFunction }
+        filteredTable = filteredTable.filter{ $0.Age <= filterAge }
     }
     
     public func getFilterBMITable() -> some View  {
@@ -112,11 +126,9 @@ class UIJoin: ObservableObject {
         }
     }
     
-
-    
-    public func loadGlucose() -> some View {
+    public func loadScatter() -> some View {
         let barChart = Chart {
-            ForEach(filteredGlucose) { shape in
+            ForEach(filteredTable) { shape in
                 PointMark(
                     x: .value("Glucose", shape.id),
                     y: .value("Value", shape.Glucose)
@@ -124,6 +136,7 @@ class UIJoin: ObservableObject {
                 .foregroundStyle(by: .value("Diabetes", shape.Outcome))
             }
         }
+        .chartLegend(.hidden)
 //            .chartYScale(range: 0...200)  // change this to max later
         return barChart
     }

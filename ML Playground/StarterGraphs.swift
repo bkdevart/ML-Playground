@@ -27,7 +27,7 @@ struct StarterGraphs: View {
                     Text("Mean: \(controls.getGlucoseMean())")
                 }
                 .font(.body)
-                controls.loadGlucose()
+                controls.loadScatter()
                     .padding()
                 // Glucose chart
                 HStack {
@@ -36,7 +36,7 @@ struct StarterGraphs: View {
                     Slider(value: $filterGlucose, in: 0...200, step: 1)
                         .onChange(of: filterGlucose) { _ in
                             controls.filterGlucose = Float(filterGlucose)  // store value so it can be used to filter data
-                            controls.loadGlucoseFilter()  // update data for graphs with filter
+                            controls.loadFilters()  // update data for graphs with filter
                         }
                 }
                 .padding()
