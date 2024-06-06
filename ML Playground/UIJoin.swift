@@ -136,6 +136,7 @@ class UIJoin: ObservableObject {
             }
         }
         .chartLegend(.hidden)
+        .chartYScale(domain: 0...200)
 //            .chartYScale(range: 0...200)  // change this to max later
         return barChart
     }
@@ -151,15 +152,7 @@ class UIJoin: ObservableObject {
                         y: .value("Count", item.count)
                     )
                 }
-        
-//        let barChart = Chart{
-//            ForEach(filteredTable) { shape in
-//                BarMark(
-//                    x: .value("Glucose", shape.id),
-//                    y: .value("Value", shape.Glucose)
-//                )
-//            }
-//        }
+                .chartXScale(domain: 0...1)
         return barChart
     }
 
