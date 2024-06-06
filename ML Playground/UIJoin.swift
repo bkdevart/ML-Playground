@@ -35,20 +35,19 @@ class UIJoin: ObservableObject {
     @Published var filteredGlucose = [Pima]()
     @Published var filteredTable = [Pima]()
     
-    @Published var filterBMI = Float(75)
-    @Published var filterGlucose = Float(200)
+    @Published var filterBMI = Float(33)
+    @Published var filterGlucose = Float(70)
     @Published var filterBloodPressure = Float(70)
     @Published var filterSkinThickness = Float(50)
     @Published var filterInsulin = Float(440)
-    @Published var filterPregancies = Float(2)
-    @Published var filterdiabetesPedigreeFunction = Float(0.50)
+    @Published var filterPregancies = Float(0)
+    @Published var filterdiabetesPedigreeFunction = Float(0.5)
     @Published var filterAge = Float(21)
     
     public func loadBMIFilter() {
         filteredBMI = pima.filter{ $0.BMI <= filterBMI }
     }
     
-    // TODO: make this filter function for all sliders
     public func loadFilters() {
         filteredTable = pima.filter{ $0.Pregnancies <= filterPregancies }
         filteredTable = filteredTable.filter{ $0.Glucose <= filterGlucose }
@@ -140,6 +139,31 @@ class UIJoin: ObservableObject {
 //            .chartYScale(range: 0...200)  // change this to max later
         return barChart
     }
+    
+    public func loadBar() -> some View {
+        let aggregatedData = Dictionary(grouping: filteredTable, by: { $0.Outcome })
+            .map { (outcome, items) in
+                (category: outcome, count: items.count)
+            }
+        let barChart = Chart(aggregatedData, id: \.category) { item in
+                    BarMark(
+                        x: .value("Category", item.category),
+                        y: .value("Count", item.count)
+                    )
+                }
+        
+//        let barChart = Chart{
+//            ForEach(filteredTable) { shape in
+//                BarMark(
+//                    x: .value("Glucose", shape.id),
+//                    y: .value("Value", shape.Glucose)
+//                )
+//            }
+//        }
+        return barChart
+    }
+
+    
     
     public func loadData() {
         if let localData = readLocalFile(forName: "diabetes") {

@@ -28,6 +28,7 @@ struct StarterGraphs: View {
                 }
                 .font(.body)
                 controls.loadScatter()
+//                controls.loadBar()
                     .padding()
                 // Glucose chart
                 HStack {

@@ -43,7 +43,10 @@ struct ContentView: View {
                     .font(.headline)
                 Text("\(predictionValue)")
                     .font(.largeTitle)
-                shared.loadScatter()
+                HStack {
+                    shared.loadScatter()
+                    shared.loadBar()
+                }
                 
                 Text("Choose feature values")
                     .font(.headline)
