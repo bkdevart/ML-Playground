@@ -35,14 +35,14 @@ class UIJoin: ObservableObject {
     @Published var filteredGlucose = [Pima]()
     @Published var filteredTable = [Pima]()
     
-    @Published var filterBMI = Float(33)
-    @Published var filterGlucose = Float(70)
-    @Published var filterBloodPressure = Float(70)
-    @Published var filterSkinThickness = Float(50)
-    @Published var filterInsulin = Float(440)
-    @Published var filterPregancies = Float(0)
-    @Published var filterdiabetesPedigreeFunction = Float(0.5)
-    @Published var filterAge = Float(21)
+    @Published var filterBMI = Float(32)
+    @Published var filterGlucose = Float(117)
+    @Published var filterBloodPressure = Float(72)
+    @Published var filterSkinThickness = Float(23)
+    @Published var filterInsulin = Float(30.5)
+    @Published var filterPregancies = Float(3)
+    @Published var filterdiabetesPedigreeFunction = Float(0.3725)
+    @Published var filterAge = Float(29)
     
     public func loadBMIFilter() {
         filteredBMI = pima.filter{ $0.BMI <= filterBMI }

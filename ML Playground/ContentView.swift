@@ -25,14 +25,14 @@ import CreateMLComponents
 struct ContentView: View {
     @State private var predictionValue = 0
     
-    @State private var pregnancies = 0.0
-    @State private var glucose = 70.0
-    @State private var bloodPressure = 70.0
-    @State private var skinThickness = 50.0
-    @State private var insulin = 440.0
-    @State private var BMI = 33.0
-    @State private var diabetesPedigreeFunction = 0.5
-    @State private var Age = 21.0
+    @State private var pregnancies = 3.0
+    @State private var glucose = 117.0
+    @State private var bloodPressure = 72.0
+    @State private var skinThickness = 23.0
+    @State private var insulin = 30.5
+    @State private var BMI = 32.0
+    @State private var diabetesPedigreeFunction = 0.3725
+    @State private var Age = 29.0
     
     let shared = UIJoin.shared
     
