@@ -54,12 +54,11 @@ struct ContentView: View {
                 Group {
                     
                     HStack {
-                        Text("% Near: \(String(format: "%.f", percentNear))")
+                        Text("Near: \(String(format: "%.f", percentNear))%")
                         Slider(value: $percentNear, in: 0...100, step: 1)
                             .onChange(of: percentNear) { _ in
+                                shared.filterPercentNear = Float(percentNear)
                                 shared.calcFeaturePercent(percentNet: percentNear)
-                                shared.filterPercentNear = Float(percentNear)  // store value so it can be used to filter data
-//                                shared.loadFilters()  // update data for graphs with filter
                                 calculateDiabetes()
                             }
                     }
@@ -69,7 +68,7 @@ struct ContentView: View {
                         Slider(value: $pregnancies, in: 0...17, step: 1)
                             .onChange(of: pregnancies) { _ in
                                 shared.filterPregancies = Float(pregnancies)
-                                shared.loadFilters()
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }
@@ -79,7 +78,8 @@ struct ContentView: View {
                         Slider(value: $glucose, in: 0...200, step: 5)
                             .onChange(of: glucose) { _ in
                                 shared.filterGlucose = Float(glucose)
-                                shared.loadFilters()
+//                                shared.loadFilters()
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }
@@ -89,7 +89,8 @@ struct ContentView: View {
                         Slider(value: $bloodPressure, in: 0...122, step: 1)
                             .onChange(of: bloodPressure) { _ in
                                 shared.filterBloodPressure = Float(bloodPressure)  // store value so it can be used to filter data
-                                shared.loadFilters()  // update data for graphs with filter
+//                                shared.loadFilters()  // update data for graphs with filter
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }
@@ -99,7 +100,8 @@ struct ContentView: View {
                         Slider(value: $skinThickness, in: 0...100, step: 0.05)
                             .onChange(of: skinThickness) { _ in
                                 shared.filterSkinThickness = Float(skinThickness)
-                                shared.loadFilters()
+//                                shared.loadFilters()
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }
@@ -110,7 +112,8 @@ struct ContentView: View {
                         Slider(value: $insulin, in: 0...846, step: 5)
                             .onChange(of: insulin) { _ in
                                 shared.filterInsulin = Float(insulin)
-                                shared.loadFilters()
+//                                shared.loadFilters()
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }
@@ -120,7 +123,8 @@ struct ContentView: View {
                         Slider(value: $BMI, in: 0...67, step: 0.5)
                             .onChange(of: BMI) { _ in   // can also be newBMI in BMI if you need value
                                 shared.filterBMI = Float(BMI)
-                                shared.loadFilters()
+//                                shared.loadFilters()
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }
@@ -130,7 +134,8 @@ struct ContentView: View {
                         Slider(value: $diabetesPedigreeFunction, in: 0.5...2.5, step: 0.05)
                             .onChange(of: diabetesPedigreeFunction) { _ in
                                 shared.filterdiabetesPedigreeFunction = Float(diabetesPedigreeFunction)
-                                shared.loadFilters()
+//                                shared.loadFilters()
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }
@@ -140,7 +145,8 @@ struct ContentView: View {
                         Slider(value: $Age, in: 21...81, step: 1)
                             .onChange(of: Age) { _ in
                                 shared.filterAge = Float(Age)
-                                shared.loadFilters()
+//                                shared.loadFilters()
+                                shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                 calculateDiabetes()
                             }
                     }

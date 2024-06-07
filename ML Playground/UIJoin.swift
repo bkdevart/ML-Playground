@@ -96,34 +96,99 @@ class UIJoin: ObservableObject {
         return filteredTable.count
     }
     
+    public func getDataByPercent(percentNet: Float, values: [Float]) -> Float {
+        let min = values.min() ?? 0
+        let max = values.max() ?? 0
+        let percent = ((max - min) / 100.0) * percentNet
+        // figure out new range off of BMIPercent value (add and subtract)
+        return percent
+    }
+    
     // TODO: write function that takes feature as parameter and calculates 1%
     public func calcFeaturePercent(percentNet: Float) {
         // Pregancy
-        let values = pima.map({ $0.Pregnancies })
+        // Calculate ranges
+        var values = pima.map({ $0.Pregnancies })
+        var percent = getDataByPercent(percentNet: percentNet, values: values)
+        var min = filterPregancies - percent
+        var max = filterPregancies + percent
+        // filter table data
+        filteredTable = pima.filter{ $0.Pregnancies <= max }
+        filteredTable = filteredTable.filter{ $0.Pregnancies >= min }
         
+        // Glucose
+        // Calculate ranges
+        values = pima.map({ $0.Glucose })
+        percent = getDataByPercent(percentNet: percentNet, values: values)
+        min = filterGlucose - percent
+        max = filterGlucose + percent
+        // filter table data
+        filteredTable = filteredTable.filter{ $0.Glucose <= max }
+        filteredTable = filteredTable.filter{ $0.Glucose >= min }
         
-        var min = values.min() ?? 0
-        var max = values.max() ?? 0
-        let percent = ((max - min) / 100.0) * percentNet
-        // figure out new range off of BMIPercent value (add and subtract)
-        min = filterBMI - percent
-        max = filterBMI + percent
-        print("Min: \(min), Max: \(max)")
+        // Blood pressure
+        // Calculate ranges
+        values = pima.map({ $0.BloodPressure })
+        percent = getDataByPercent(percentNet: percentNet, values: values)
+        min = filterBloodPressure - percent
+        max = filterBloodPressure + percent
+        // filter table data
+        filteredTable = filteredTable.filter{ $0.BloodPressure <= max }
+        filteredTable = filteredTable.filter{ $0.BloodPressure >= min }
+        
+        // Skin Thickness
+        // Calculate ranges
+        values = pima.map({ $0.SkinThickness })
+        percent = getDataByPercent(percentNet: percentNet, values: values)
+        min = filterSkinThickness - percent
+        max = filterSkinThickness + percent
+        // filter table data
+        filteredTable = filteredTable.filter{ $0.SkinThickness <= max }
+        filteredTable = filteredTable.filter{ $0.SkinThickness >= min }
+        
+        // Insulin
+        // Calculate ranges
+        values = pima.map({ $0.Insulin })
+        percent = getDataByPercent(percentNet: percentNet, values: values)
+        min = filterInsulin - percent
+        max = filterInsulin + percent
+        // filter table data
+        filteredTable = filteredTable.filter{ $0.Insulin <= max }
+        filteredTable = filteredTable.filter{ $0.Insulin >= min }
         
         // BMI
-        let bmiValues = pima.map({ $0.BMI })
-        var minBMI = bmiValues.min() ?? 0
-        var maxBMI = bmiValues.max() ?? 0
-        let BMIPercent = ((maxBMI - minBMI) / 100.0) * percentNet
-        // figure out new range off of BMIPercent value (add and subtract)
-        minBMI = filterBMI - BMIPercent
-        maxBMI = filterBMI + BMIPercent
-        print("Min: \(minBMI), Max: \(maxBMI)")
-        
-        
+        // Calculate ranges
+        values = pima.map({ $0.BMI })
+        percent = getDataByPercent(percentNet: percentNet, values: values)
+        min = filterBMI - percent
+        max = filterBMI + percent
         // filter table data
-        filteredTable = pima.filter{ $0.BMI <= maxBMI }
-        filteredTable = filteredTable.filter{ $0.BMI >= minBMI }
+        filteredTable = filteredTable.filter{ $0.BMI <= max }
+        filteredTable = filteredTable.filter{ $0.BMI >= min }
+        
+        // Diabetes Pedigree Function
+        // Calculate ranges
+        values = pima.map({ $0.DiabetesPedigreeFunction })
+        percent = getDataByPercent(percentNet: percentNet, values: values)
+        min = filterdiabetesPedigreeFunction - percent
+        max = filterdiabetesPedigreeFunction + percent
+        // filter table data
+        filteredTable = filteredTable.filter{ $0.DiabetesPedigreeFunction <= max }
+        filteredTable = filteredTable.filter{ $0.DiabetesPedigreeFunction >= min }
+        
+        // Age
+        // Calculate ranges
+        values = pima.map({ $0.Age })
+        percent = getDataByPercent(percentNet: percentNet, values: values)
+        min = filterAge - percent
+        max = filterAge + percent
+        // filter table data
+        filteredTable = filteredTable.filter{ $0.Age <= max }
+        filteredTable = filteredTable.filter{ $0.Age >= min }
+        
+//        print("Min: \(min), Max: \(max)")
+        
+        
     }
     
     public func getFilterGlucoseTable() -> some View  {
@@ -179,9 +244,30 @@ class UIJoin: ObservableObject {
                 .chartXScale(domain: 0...1)
         return barChart
     }
+    
+    public func loadPie() -> some View {
+        let aggregatedData = Dictionary(grouping: filteredTable, by: { $0.Outcome })
+            .map { (outcome, items) in
+                (category: outcome, count: items.count)
+            }
+        
+        if #available(iOS 17.0, *) {
+            let pieChart = Chart(aggregatedData, id: \.category) { item in
+                SectorMark(
+                    angle: .value("Count", item.count)
+                    //                label: .value("Category", item.category)
+                )
+            }
+            return pieChart
+//                .frame(height: 300)
+        } else {
+            // Fallback on earlier versions
+            return loadBar()
+        }
 
-    
-    
+        
+    }
+
     public func loadData() {
         if let localData = readLocalFile(forName: "diabetes") {
             parse(jsonData: localData)
