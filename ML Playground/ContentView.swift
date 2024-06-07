@@ -25,6 +25,7 @@ import CreateMLComponents
 struct ContentView: View {
     @State private var predictionValue = 0
     
+    @State private var percentNear : Float = 25.0 
     @State private var pregnancies = 3.0
     @State private var glucose = 117.0
     @State private var bloodPressure = 72.0
@@ -51,6 +52,18 @@ struct ContentView: View {
                 Text("Choose feature values")
                     .font(.headline)
                 Group {
+                    
+                    HStack {
+                        Text("% Near: \(String(format: "%.f", percentNear))")
+                        Slider(value: $percentNear, in: 0...100, step: 1)
+                            .onChange(of: percentNear) { _ in
+                                shared.calcFeaturePercent(percentNet: percentNear)
+                                shared.filterPercentNear = Float(percentNear)  // store value so it can be used to filter data
+//                                shared.loadFilters()  // update data for graphs with filter
+                                calculateDiabetes()
+                            }
+                    }
+                    
                     HStack {
                         Text("Pregnancy: \(String(format: "%.f", pregnancies))")
                         Slider(value: $pregnancies, in: 0...17, step: 1)

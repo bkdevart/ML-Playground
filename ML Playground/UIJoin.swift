@@ -43,6 +43,7 @@ class UIJoin: ObservableObject {
     @Published var filterPregancies = Float(3)
     @Published var filterdiabetesPedigreeFunction = Float(0.3725)
     @Published var filterAge = Float(29)
+    @Published var filterPercentNear = Float(25)
     
     public func loadBMIFilter() {
         filteredBMI = pima.filter{ $0.BMI <= filterBMI }
@@ -91,11 +92,39 @@ class UIJoin: ObservableObject {
         return mean
     }
     
-    public func getGlucoseCount() -> Int {
-        return filteredGlucose.count
+    public func getSampleCount() -> Int {
+        return filteredTable.count
     }
     
-
+    // TODO: write function that takes feature as parameter and calculates 1%
+    public func calcFeaturePercent(percentNet: Float) {
+        // Pregancy
+        let values = pima.map({ $0.Pregnancies })
+        
+        
+        var min = values.min() ?? 0
+        var max = values.max() ?? 0
+        let percent = ((max - min) / 100.0) * percentNet
+        // figure out new range off of BMIPercent value (add and subtract)
+        min = filterBMI - percent
+        max = filterBMI + percent
+        print("Min: \(min), Max: \(max)")
+        
+        // BMI
+        let bmiValues = pima.map({ $0.BMI })
+        var minBMI = bmiValues.min() ?? 0
+        var maxBMI = bmiValues.max() ?? 0
+        let BMIPercent = ((maxBMI - minBMI) / 100.0) * percentNet
+        // figure out new range off of BMIPercent value (add and subtract)
+        minBMI = filterBMI - BMIPercent
+        maxBMI = filterBMI + BMIPercent
+        print("Min: \(minBMI), Max: \(maxBMI)")
+        
+        
+        // filter table data
+        filteredTable = pima.filter{ $0.BMI <= maxBMI }
+        filteredTable = filteredTable.filter{ $0.BMI >= minBMI }
+    }
     
     public func getFilterGlucoseTable() -> some View  {
         let filteredTable = pima.filter { $0.id < 5 }
@@ -105,11 +134,6 @@ class UIJoin: ObservableObject {
                 TableColumn("Glucose", value: \.GlucoseString)
             }
         }
-        // TODO: calculate average Glucose value in filtered data
-//        ForEach(filteredGlucose) { shape in
-//
-//        }
-//        pima.Glucose.reduce(0, +)
         return body
     }
     

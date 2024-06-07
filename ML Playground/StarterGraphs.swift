@@ -20,10 +20,10 @@ struct StarterGraphs: View {
             
             // summary stats
             VStack {
-                Text("Glucose")
+                Text("Similar Samples")
                     .font(.largeTitle)
                 Group {
-                    Text("Samples: \(controls.getGlucoseCount())")
+                    Text("Samples: \(controls.getSampleCount())")
                     Text("Mean: \(controls.getGlucoseMean())")
                 }
                 .font(.body)
