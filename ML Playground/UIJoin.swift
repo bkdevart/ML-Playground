@@ -254,7 +254,9 @@ class UIJoin: ObservableObject {
         if #available(iOS 17.0, *) {
             let pieChart = Chart(aggregatedData, id: \.category) { item in
                 SectorMark(
-                    angle: .value("Count", item.count)
+                    angle: .value("Count", item.count),
+                    innerRadius: .ratio(0.5),
+                    angularInset: 0
                     //                label: .value("Category", item.category)
                 )
             }

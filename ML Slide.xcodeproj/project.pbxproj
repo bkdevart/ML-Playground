@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA54D90829A40AB7000C0C36 /* DiabetesTest.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CA54D90729A40AB7000C0C36 /* DiabetesTest.mlmodel */; };
 		CA54D90A29A5928B000C0C36 /* StarterGraphs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54D90929A5928B000C0C36 /* StarterGraphs.swift */; };
 		CA54D91129A8FD99000C0C36 /* UIJoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54D91029A8FD99000C0C36 /* UIJoin.swift */; };
 		CA54D91429AD6E06000C0C36 /* diabetes.json in Resources */ = {isa = PBXBuildFile; fileRef = CA54D91329AD6E06000C0C36 /* diabetes.json */; };
+		CAF3DF242C176B9B00940FE0 /* DiabetesTest.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CAF3DF232C176B9B00940FE0 /* DiabetesTest.mlmodel */; };
 		CAFF9638299F28110059C078 /* ML_PlaygroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */; };
 		CAFF963A299F28110059C078 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFF9639299F28110059C078 /* ContentView.swift */; };
 		CAFF963C299F28120059C078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAFF963B299F28120059C078 /* Assets.xcassets */; };
@@ -21,11 +21,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CA54D90729A40AB7000C0C36 /* DiabetesTest.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DiabetesTest.mlmodel; sourceTree = "<group>"; };
 		CA54D90929A5928B000C0C36 /* StarterGraphs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterGraphs.swift; sourceTree = "<group>"; };
 		CA54D91029A8FD99000C0C36 /* UIJoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIJoin.swift; sourceTree = "<group>"; };
 		CA54D91229A9121A000C0C36 /* ML-Slide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ML-Slide-Info.plist"; sourceTree = "<group>"; };
 		CA54D91329AD6E06000C0C36 /* diabetes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = diabetes.json; sourceTree = "<group>"; };
+		CAF3DF232C176B9B00940FE0 /* DiabetesTest.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = DiabetesTest.mlmodel; path = python_data/DiabetesTest.mlmodel; sourceTree = SOURCE_ROOT; };
 		CAFF9634299F28110059C078 /* ML Slide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ML Slide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ML_PlaygroundApp.swift; sourceTree = "<group>"; };
 		CAFF9639299F28110059C078 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -71,8 +71,8 @@
 				CA54D91329AD6E06000C0C36 /* diabetes.json */,
 				CAFF9637299F28110059C078 /* ML_PlaygroundApp.swift */,
 				CAFF9639299F28110059C078 /* ContentView.swift */,
+				CAF3DF232C176B9B00940FE0 /* DiabetesTest.mlmodel */,
 				CA54D90929A5928B000C0C36 /* StarterGraphs.swift */,
-				CA54D90729A40AB7000C0C36 /* DiabetesTest.mlmodel */,
 				CAFF963B299F28120059C078 /* Assets.xcassets */,
 				CAFF964E29A39D410059C078 /* icon.png */,
 				CAFF9640299F28120059C078 /* Persistence.swift */,
@@ -165,9 +165,9 @@
 				CAFF9641299F28120059C078 /* Persistence.swift in Sources */,
 				CAFF963A299F28110059C078 /* ContentView.swift in Sources */,
 				CA54D91129A8FD99000C0C36 /* UIJoin.swift in Sources */,
+				CAF3DF242C176B9B00940FE0 /* DiabetesTest.mlmodel in Sources */,
 				CA54D90A29A5928B000C0C36 /* StarterGraphs.swift in Sources */,
 				CAFF9638299F28110059C078 /* ML_PlaygroundApp.swift in Sources */,
-				CA54D90829A40AB7000C0C36 /* DiabetesTest.mlmodel in Sources */,
 				CAFF9644299F28120059C078 /* ML_Playground.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
