@@ -236,12 +236,18 @@ class UIJoin: ObservableObject {
                 (category: outcome, count: items.count)
             }
         let barChart = Chart(aggregatedData, id: \.category) { item in
-                    BarMark(
-                        x: .value("Category", item.category),
-                        y: .value("Count", item.count)
-                    )
+            BarMark(
+                x: .value("Category", item.category),
+                y: .value("Count", item.count)
+            )
+            .annotation(position: .top, alignment: .center) {
+                Text("\(item.count)")
+                    .font(.caption)
+                    .foregroundColor(.black)
                 }
-                .chartXScale(domain: 0...1)
+            }
+            .chartXScale(domain: -0.5...1.5)
+        
         return barChart
     }
     

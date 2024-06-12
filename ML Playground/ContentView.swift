@@ -11,21 +11,16 @@ import CreateMLComponents
 
 /*
  FEATURE IDEAS
- 1. Play with data visualization libraries to show density, etc
- 2. Create more advanced visualizations with feature importances
- 3. Make ability to train on more data? (much later)
+ 1. Create more advanced visualizations with feature importances
+ 2. Add output for % distribution of diabetes/no diabetes for current feature selection
+ 2. Make ability to train on more data?
     a. My current understanding is that this can't be done, but verify
- 
- BUGS
- 1. When submitting to TestFlight
-    a. The provided entity includes a relationship with an invalid value
-    b. '' not a valid id for the relatsionship 'build' (ID: d300770c-d5cb-46e6-ab2f-444845d0be6f)
  */
 
 struct ContentView: View {
     @State private var predictionValue = 0
     
-    @State private var percentNear : Float = 25.0 
+    @State private var percentNear : Float = 25.0
     @State private var pregnancies = 3.0
     @State private var glucose = 117.0
     @State private var bloodPressure = 72.0
@@ -49,6 +44,16 @@ struct ContentView: View {
                     shared.loadScatter()
                     shared.loadBar()
                 }
+                VStack {
+                    // TODO: add sample size # to this output
+                    Text("Near: \(String(format: "%.f", percentNear))%")
+                    Slider(value: $percentNear, in: 0...100, step: 1)
+                        .onChange(of: percentNear) { _ in
+                            shared.filterPercentNear = Float(percentNear)
+                            shared.calcFeaturePercent(percentNet: percentNear)
+                            calculateDiabetes()
+                        }
+                }
                 
                 Text("Choose feature values")
                     .font(.headline)
@@ -56,17 +61,6 @@ struct ContentView: View {
                 HStack {
                     VStack {
                         Group {
-                            
-                            VStack {
-                                Text("Near: \(String(format: "%.f", percentNear))%")
-                                Slider(value: $percentNear, in: 0...100, step: 1)
-                                    .onChange(of: percentNear) { _ in
-                                        shared.filterPercentNear = Float(percentNear)
-                                        shared.calcFeaturePercent(percentNet: percentNear)
-                                        calculateDiabetes()
-                                    }
-                            }
-                            
                             VStack {
                                 Text("Pregnancy: \(String(format: "%.f", pregnancies))")
                                 Slider(value: $pregnancies, in: 0...17, step: 1)
@@ -137,7 +131,7 @@ struct ContentView: View {
                             }
                             
                             VStack {
-                                Text("Diabetes Pedigree Function: \(String(format: "%.2f", diabetesPedigreeFunction))")
+                                Text("DPF: \(String(format: "%.2f", diabetesPedigreeFunction))")
                                 Slider(value: $diabetesPedigreeFunction, in: 0.5...2.5, step: 0.05)
                                     .onChange(of: diabetesPedigreeFunction) { _ in
                                         shared.filterdiabetesPedigreeFunction = Float(diabetesPedigreeFunction)
