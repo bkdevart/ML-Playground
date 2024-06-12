@@ -12,8 +12,9 @@ import CreateMLComponents
 /*
  FEATURE IDEAS
  1. Create more advanced visualizations with feature importances
- 2. Add output for % distribution of diabetes/no diabetes for current feature selection
- 2. Make ability to train on more data?
+ 2. Make classification result show color along with diabetes or no diabetes text
+ 3. Add output for % distribution of diabetes/no diabetes for current feature selection
+ 4. Make ability to train on more data?
     a. My current understanding is that this can't be done, but verify
  */
 
@@ -32,7 +33,10 @@ struct ContentView: View {
     
     let shared = UIJoin.shared
     
+    
     var body: some View {
+        let textColor = shared.categoryColors[predictionValue, default: .black]
+        
         NavigationView {
             
             VStack {
@@ -40,6 +44,7 @@ struct ContentView: View {
                     .font(.headline)
                 Text("\(predictionValue)")
                     .font(.largeTitle)
+                    .foregroundColor(textColor)
                 HStack {
                     shared.loadScatter()
                     shared.loadBar()
@@ -151,7 +156,7 @@ struct ContentView: View {
                                         calculateDiabetes()
                                     }
                             }
-                            Spacer()
+//                            Spacer()
                         }
                     }
                 }

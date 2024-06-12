@@ -29,7 +29,6 @@ struct Pima: Codable, Identifiable {
 
 
 class UIJoin: ObservableObject {
-//    @Published var data = Data()  // is this needed?
     @Published var pima = [Pima]()
     @Published var filteredBMI = [Pima]()
     @Published var filteredGlucose = [Pima]()
@@ -44,6 +43,10 @@ class UIJoin: ObservableObject {
     @Published var filterdiabetesPedigreeFunction = Float(0.3725)
     @Published var filterAge = Float(29)
     @Published var filterPercentNear = Float(25)
+    @Published var categoryColors: [Int: Color] = [
+        0: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255),
+        1: .blue
+    ]
     
     public func loadBMIFilter() {
         filteredBMI = pima.filter{ $0.BMI <= filterBMI }
@@ -215,26 +218,41 @@ class UIJoin: ObservableObject {
     }
     
     public func loadScatter() -> some View {
-        let barChart = Chart {
+        let categoryColors: [Int: Color] = [
+//            0: Color(red: 125 / 255, green: 190 / 255, blue: 247 / 255),
+            0: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255),
+            1: .blue
+        ]
+        
+        let scatterChart = Chart {
             ForEach(filteredTable) { shape in
                 PointMark(
                     x: .value("Glucose", shape.id),
                     y: .value("Value", shape.Glucose)
                 )
-                .foregroundStyle(by: .value("Diabetes", shape.Outcome))
+                .foregroundStyle(categoryColors[Int(shape.Outcome)] ?? .black)
             }
         }
         .chartLegend(.hidden)
         .chartYScale(domain: 0...200)
-//            .chartYScale(range: 0...200)  // change this to max later
-        return barChart
+        
+        return scatterChart
     }
     
     public func loadBar() -> some View {
+        // aggregate counts for bar chart
         let aggregatedData = Dictionary(grouping: filteredTable, by: { $0.Outcome })
             .map { (outcome, items) in
                 (category: outcome, count: items.count)
             }
+        
+        // define custom colors for bar chart legend
+        let categoryColors: [Int: Color] = [
+            0: .blue,
+            1: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255)
+        ]
+        
+        // create barchart
         let barChart = Chart(aggregatedData, id: \.category) { item in
             BarMark(
                 x: .value("Category", item.category),
@@ -244,9 +262,12 @@ class UIJoin: ObservableObject {
                 Text("\(item.count)")
                     .font(.caption)
                     .foregroundColor(.black)
-                }
             }
-            .chartXScale(domain: -0.5...1.5)
+            .foregroundStyle(by: .value("Category", item.category))
+        }
+        .chartXScale(domain: -0.5...1.5)
+        .chartLegend(position: .trailing)
+        .chartForegroundStyleScale(domain: categoryColors.keys.sorted(), range: categoryColors.values.sorted(by: { $0.description < $1.description }))
         
         return barChart
     }
