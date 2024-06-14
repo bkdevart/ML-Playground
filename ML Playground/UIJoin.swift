@@ -21,8 +21,7 @@ struct Pima: Codable, Identifiable {
     let DiabetesPedigreeFunction: Float
     let Age: Float
     let Outcome: Float
-    
-    // TODO: see if you can get this formatted to 2 decimal places
+
     var BMIString: String { BMI.formatted(.number) }
     var GlucoseString: String { Glucose.formatted(.number) }
 }
@@ -219,7 +218,6 @@ class UIJoin: ObservableObject {
     
     public func loadScatter() -> some View {
         let categoryColors: [Int: Color] = [
-//            0: Color(red: 125 / 255, green: 190 / 255, blue: 247 / 255),
             0: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255),
             1: .blue
         ]
@@ -266,7 +264,6 @@ class UIJoin: ObservableObject {
             .foregroundStyle(by: .value("Category", item.category))
         }
         .chartXScale(domain: -0.5...1.5)
-        .chartLegend(position: .trailing)
         .chartForegroundStyleScale(domain: categoryColors.keys.sorted(), range: categoryColors.values.sorted(by: { $0.description < $1.description }))
         
         return barChart
@@ -278,23 +275,20 @@ class UIJoin: ObservableObject {
                 (category: outcome, count: items.count)
             }
         
+        // TODO: trying to draw pie, doesn't seem to identify OS properly
         if #available(iOS 17.0, *) {
             let pieChart = Chart(aggregatedData, id: \.category) { item in
                 SectorMark(
                     angle: .value("Count", item.count),
                     innerRadius: .ratio(0.5),
                     angularInset: 0
-                    //                label: .value("Category", item.category)
                 )
             }
             return pieChart
-//                .frame(height: 300)
         } else {
             // Fallback on earlier versions
             return loadBar()
         }
-
-        
     }
 
     public func loadData() {
@@ -321,7 +315,7 @@ class UIJoin: ObservableObject {
         return nil
     }
 
-    private func parse(jsonData: Data) {  // -> [Pima]
+    private func parse(jsonData: Data) {
         print("Parsing...")
         do {
             let decodedData = try JSONDecoder().decode([Pima].self,
@@ -329,29 +323,29 @@ class UIJoin: ObservableObject {
             print("Pregancies[0]: ", decodedData[0].Pregnancies)
             print("Outcome[0]: ", decodedData[0].Outcome)
             print("===================================")
-            // TODO: push to shared object
+            // push to shared object
             self.pima = decodedData
         } catch {
             print("decode error")
         }
     }
 
-    private func loadJson(fromURLString urlString: String,
-                          completion: @escaping (Result<Data, Error>) -> Void) {
-        if let url = URL(string: urlString) {
-            let urlSession = URLSession(configuration: .default).dataTask(with: url) { (data, response, error) in
-                if let error = error {
-                    completion(.failure(error))
-                }
-                
-                if let data = data {
-                    completion(.success(data))
-                }
-            }
-            
-            urlSession.resume()
-        }
-    }
+//    private func loadJson(fromURLString urlString: String,
+//                          completion: @escaping (Result<Data, Error>) -> Void) {
+//        if let url = URL(string: urlString) {
+//            let urlSession = URLSession(configuration: .default).dataTask(with: url) { (data, response, error) in
+//                if let error = error {
+//                    completion(.failure(error))
+//                }
+//                
+//                if let data = data {
+//                    completion(.success(data))
+//                }
+//            }
+//            
+//            urlSession.resume()
+//        }
+//    }
     
     static var shared = UIJoin()
 }

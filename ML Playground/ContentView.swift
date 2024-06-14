@@ -11,11 +11,10 @@ import CreateMLComponents
 
 /*
  FEATURE IDEAS
- 1. Create more advanced visualizations with feature importances
- 2. Make classification result show color along with diabetes or no diabetes text
- 3. Add output for % distribution of diabetes/no diabetes for current feature selection
- 4. Make ability to train on more data?
+ 1. Modify Near output on slider to show % total sample visualized represents
+ 2. Make ability to train on more data?
     a. My current understanding is that this can't be done, but verify
+ 3. Visualize other model parameters
  */
 
 struct ContentView: View {
@@ -42,7 +41,9 @@ struct ContentView: View {
             VStack {
                 Text("Classification Result")
                     .font(.headline)
-                Text("\(predictionValue)")
+                
+                let displayText = predictionValue == 0 ? "no diabetes" : "diabetes"
+                Text("\(displayText)")
                     .font(.largeTitle)
                     .foregroundColor(textColor)
                 HStack {
@@ -81,7 +82,6 @@ struct ContentView: View {
                                 Slider(value: $glucose, in: 0...200, step: 5)
                                     .onChange(of: glucose) { _ in
                                         shared.filterGlucose = Float(glucose)
-                                        //                                shared.loadFilters()
                                         shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                         calculateDiabetes()
                                     }
