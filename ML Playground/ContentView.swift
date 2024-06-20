@@ -43,7 +43,7 @@ struct ContentView: View {
                 Text("Classification Result")
                     .font(.headline)
                 
-                let displayText = predictionValue == 0 ? "no diabetes" : "diabetes"
+                let displayText = predictionValue == 0 ? "Negative" : "Positive"
                 Text("\(displayText)")
                     .font(.largeTitle)
                     .foregroundColor(textColor)
@@ -160,7 +160,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("ML Model")
+//            .navigationTitle("ML Model")
             .padding([.horizontal])
             .toolbar {
                 NavigationLink("Detail", destination: StarterGraphs())

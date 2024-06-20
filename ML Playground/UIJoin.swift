@@ -28,6 +28,7 @@ extension View {
                             .fill(item.color)
                             .frame(width: 10, height: 10)
                         Text(item.label)
+                            .font(.caption2)
                     }
                     .padding(.trailing, 10)
                 }
@@ -58,8 +59,6 @@ struct Pima: Codable, Identifiable {
 
 class UIJoin: ObservableObject {
     @Published var pima = [Pima]()
-    @Published var filteredBMI = [Pima]()  // TODO: remove this
-    @Published var filteredGlucose = [Pima]()
     @Published var filteredTable = [Pima]()
     
     @Published var filterBMI = Float(32)
@@ -72,8 +71,8 @@ class UIJoin: ObservableObject {
     @Published var filterAge = Float(29)
     @Published var filterPercentNear = Float(25)
     @Published var categoryColors: [Int: Color] = [
-        0: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255),
-        1: .blue
+        0: .blue,
+        1: Color(red: 255 / 255, green: 170 / 255, blue: 100 / 255)
     ]
     
     public func getSampleCount() -> Int {
@@ -551,14 +550,9 @@ class UIJoin: ObservableObject {
     
     public func loadScatter() -> some View {
         
-        let categoryColors: [Int: Color] = [
-            0: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255),
-            1: .blue
-        ]
-        
         let legendItems: [LegendItem] = [
-            LegendItem(label: "0", color: categoryColors[0]!),
-            LegendItem(label: "1", color: categoryColors[1]!)
+            LegendItem(label: "Negative", color: categoryColors[0]!),
+            LegendItem(label: "Positive", color: categoryColors[1]!)
         ]
         
         let scatterChart = Chart {
@@ -567,7 +561,7 @@ class UIJoin: ObservableObject {
                         x: .value("Glucose", shape.id),
                         y: .value("Value", shape.Glucose)
                     )
-                    .foregroundStyle(categoryColors[Int(shape.Outcome)] ?? .black)
+                    .foregroundStyle(self.categoryColors[Int(shape.Outcome)] ?? .black)
                 }
             }
             .chartYScale(domain: 0...200)
@@ -584,8 +578,8 @@ class UIJoin: ObservableObject {
             }
         
         let legendItems: [LegendItem] = [
-            LegendItem(label: "0", color: categoryColors[0]!),
-            LegendItem(label: "1", color: categoryColors[1]!)
+            LegendItem(label: "Negative", color: categoryColors[0]!),
+            LegendItem(label: "Positive", color: categoryColors[1]!)
         ]
         
         // create barchart
@@ -602,7 +596,7 @@ class UIJoin: ObservableObject {
             .foregroundStyle(by: .value("Category", item.category))
         }
         .chartXScale(domain: -0.5...1.5)
-        .chartForegroundStyleScale(domain: categoryColors.keys.sorted(), range: categoryColors.values.sorted(by: { $0.description < $1.description }))
+        .chartForegroundStyleScale(domain: categoryColors.keys.sorted(), range: categoryColors.values.sorted(by: { $0.description > $1.description }))
         .chartLegend(legendItems)
         
         return barChart

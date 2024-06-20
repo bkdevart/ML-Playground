@@ -37,7 +37,7 @@ struct StarterGraphs: View {
             VStack {
                 Text("Sample Counts")
                     .font(.largeTitle)
-                Text("by Outcome")
+                Text("by Positive/Negative Outcome")
                     .font(.subheadline)
                 // chart
                 shared.loadBar()
@@ -46,12 +46,12 @@ struct StarterGraphs: View {
                 // outcome 0 and 1 summary stats
                 HStack {
                     VStack {
-                        Text("0")
+                        Text("Negative")
                             .font(.headline)
                         shared.summaryTable0
                     }
                     VStack {
-                        Text("1")
+                        Text("Positive")
                             .font(.headline)
                         shared.summaryTable1
                     }
