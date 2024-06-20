@@ -11,10 +11,7 @@ import UniformTypeIdentifiers
 
 struct StarterGraphs: View {
     
-    let controls = UIJoin.shared
-    @State private var filterBMI = 32.0 // using a value that is not exceeded in chart to start, set to max later
-    @State private var filterGlucose = 117.0 // ditto above
-    
+    let shared = UIJoin.shared
     
     var body: some View {
         TabView {
@@ -23,12 +20,12 @@ struct StarterGraphs: View {
             VStack {
                 Text("Similar Samples")
                     .font(.largeTitle)
-                controls.loadScatter()
+                shared.loadScatter()
                     .padding()
                 // summary stats
                 HStack {
-                    controls.userTable
-                    controls.summaryTable
+                    shared.userTable
+                    shared.summaryTable
                 }
             }
             .tabItem {
@@ -43,13 +40,21 @@ struct StarterGraphs: View {
                 Text("by Outcome")
                     .font(.subheadline)
                 // chart
-                controls.loadBar()
+                shared.loadBar()
                     .padding()
                 
-                // summary stats
+                // outcome 0 and 1 summary stats
                 HStack {
-                    controls.userTable
-                    controls.summaryTable
+                    VStack {
+                        Text("0")
+                            .font(.headline)
+                        shared.summaryTable0
+                    }
+                    VStack {
+                        Text("1")
+                            .font(.headline)
+                        shared.summaryTable1
+                    }
                 }
                 .font(.body)
             }
@@ -59,10 +64,6 @@ struct StarterGraphs: View {
                 Text("Bar")
             }
         }
-        .onAppear(perform: {
-//            controls.loadBMIFilter()
-//            controls.loadGlucoseFilter()
-        })
         .navigationTitle("Detail")
     }
 }

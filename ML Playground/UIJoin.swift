@@ -200,7 +200,7 @@ class UIJoin: ObservableObject {
     }
     
     
-    // Method to create a summary table
+    // create a summary table
     var summaryTable: some View {
         
         // calculate median values for each metric
@@ -260,6 +260,221 @@ class UIJoin: ObservableObject {
             "DPF": calculateMin(of: filteredTable
                 .map({ $0.DiabetesPedigreeFunction })),
             "Age": calculateMin(of: filteredTable
+                .map({ $0.Age }))
+        ]
+        
+        let summaryView = List {
+            // show median values
+            Section(header: Text("Median").font(.headline)) {
+                ForEach(summaryMedian.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key)")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0, specifier: "%.1f")")
+                    }
+                }
+            }
+            // show max values
+            Section(header: Text("Max").font(.headline)) {
+                ForEach(summaryMax.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key)")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0, specifier: "%.1f")")
+                    }
+                }
+            }
+            // show min values
+            Section(header: Text("Min").font(.headline)) {
+                ForEach(summaryMin.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key)")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0, specifier: "%.1f")")
+                    }
+                }
+            }
+        }
+        .navigationTitle("Stat Summary")
+        
+        return summaryView
+    }
+    
+    // create a summary table
+    var summaryTable0: some View {
+        
+        // filter filteredTable by outcome = 0
+        var outcome0: [Pima] {
+            filteredTable.filter { $0.Outcome == 0 }
+        }
+        
+        // calculate median values for each metric
+        let summaryMedian =  [
+            "Pregnancy": calculateMedian(of: outcome0
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMedian(of: outcome0
+                .map({ $0.Glucose })),
+            "BP": calculateMedian(of: outcome0
+                .map({ $0.BloodPressure })),
+            "Skin": calculateMedian(of: outcome0
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMedian(of: outcome0
+                .map({ $0.Insulin })),
+            "BMI": calculateMedian(of: outcome0
+                .map({ $0.BMI })),
+            "DPF": calculateMedian(of: outcome0
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMedian(of: outcome0
+                .map({ $0.Age }))
+        ]
+        
+        // calculate max values for each metric
+        let summaryMax =  [
+            "Pregnancy": calculateMax(of: outcome0
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMedian(of: outcome0
+                .map({ $0.Glucose })),
+            "BP": calculateMax(of: outcome0
+                .map({ $0.BloodPressure })),
+            "Skin": calculateMax(of: outcome0
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMax(of: outcome0
+                .map({ $0.Insulin })),
+            "BMI": calculateMax(of: outcome0
+                .map({ $0.BMI })),
+            "DPF": calculateMax(of: outcome0
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMax(of: outcome0
+                .map({ $0.Age }))
+        ]
+        
+        // calculate min values for each metric
+        let summaryMin =  [
+            "Pregnancy": calculateMin(of: outcome0
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMin(of: outcome0
+                .map({ $0.Glucose })),
+            "BP": calculateMin(of: outcome0
+                .map({ $0.BloodPressure })),
+            "Skin": calculateMin(of: outcome0
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMin(of: outcome0
+                .map({ $0.Insulin })),
+            "BMI": calculateMin(of: outcome0
+                .map({ $0.BMI })),
+            "DPF": calculateMin(of: outcome0
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMin(of: outcome0
+                .map({ $0.Age }))
+        ]
+        
+        let summaryView = List {
+            // show median values
+            Section(header: Text("Median").font(.headline)) {
+                ForEach(summaryMedian.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key)")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0, specifier: "%.1f")")
+                    }
+                }
+            }
+            // show max values
+            Section(header: Text("Max").font(.headline)) {
+                ForEach(summaryMax.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key)")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0, specifier: "%.1f")")
+                    }
+                }
+            }
+            // show min values
+            Section(header: Text("Min").font(.headline)) {
+                ForEach(summaryMin.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key)")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0, specifier: "%.1f")")
+                    }
+                }
+            }
+        }
+        .navigationTitle("Stat Summary")
+        
+        return summaryView
+    }
+    
+    // create a summary table
+    var summaryTable1: some View {
+        // TODO: filter filteredTable by outcome = 1
+        var outcome1: [Pima] {
+            filteredTable.filter { $0.Outcome == 1 }
+        }
+        
+        // calculate median values for each metric
+        let summaryMedian =  [
+            "Pregnancy": calculateMedian(of: outcome1
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMedian(of: outcome1
+                .map({ $0.Glucose })),
+            "BP": calculateMedian(of: outcome1
+                .map({ $0.BloodPressure })),
+            "Skin": calculateMedian(of: outcome1
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMedian(of: outcome1
+                .map({ $0.Insulin })),
+            "BMI": calculateMedian(of: outcome1
+                .map({ $0.BMI })),
+            "DPF": calculateMedian(of: outcome1
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMedian(of: outcome1
+                .map({ $0.Age }))
+        ]
+        
+        // calculate max values for each metric
+        let summaryMax =  [
+            "Pregnancy": calculateMax(of: outcome1
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMedian(of: outcome1
+                .map({ $0.Glucose })),
+            "BP": calculateMax(of: outcome1
+                .map({ $0.BloodPressure })),
+            "Skin": calculateMax(of: outcome1
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMax(of: outcome1
+                .map({ $0.Insulin })),
+            "BMI": calculateMax(of: outcome1
+                .map({ $0.BMI })),
+            "DPF": calculateMax(of: outcome1
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMax(of: outcome1
+                .map({ $0.Age }))
+        ]
+        
+        // calculate min values for each metric
+        let summaryMin =  [
+            "Pregnancy": calculateMin(of: outcome1
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMin(of: outcome1
+                .map({ $0.Glucose })),
+            "BP": calculateMin(of: outcome1
+                .map({ $0.BloodPressure })),
+            "Skin": calculateMin(of: outcome1
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMin(of: outcome1
+                .map({ $0.Insulin })),
+            "BMI": calculateMin(of: outcome1
+                .map({ $0.BMI })),
+            "DPF": calculateMin(of: outcome1
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMin(of: outcome1
                 .map({ $0.Age }))
         ]
         
