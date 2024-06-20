@@ -137,7 +137,7 @@ struct ContentView: View {
                             
                             VStack {
                                 Text("DPF: \(String(format: "%.2f", diabetesPedigreeFunction))")
-                                Slider(value: $diabetesPedigreeFunction, in: 0.5...2.5, step: 0.05)
+                                Slider(value: $diabetesPedigreeFunction, in: 0.0...2.5, step: 0.05)
                                     .onChange(of: diabetesPedigreeFunction) { _ in
                                         shared.filterdiabetesPedigreeFunction = Float(diabetesPedigreeFunction)
                                         //                                shared.loadFilters()
