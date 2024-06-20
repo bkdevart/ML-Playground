@@ -157,13 +157,25 @@ class UIJoin: ObservableObject {
             return sortedValues[count / 2]
         }
     }
+    
+    func calculateMax(of values: [Float]) -> Float? {
+        guard !values.isEmpty else { return nil }
+        
+        return values.max()
+    }
+    
+    func calculateMin(of values: [Float]) -> Float? {
+        guard !values.isEmpty else { return nil }
+        
+        return values.min()
+    }
 
     
     // Method to create a summary table
     var summaryTable: some View {
         
-        // TODO: calculate median values for each metric
-        let summary =  [
+        // calculate median values for each metric
+        let summaryMedian =  [
             "Pregnancies": calculateMedian(of: filteredTable
                 .map({ $0.Pregnancies })),
             "Glucose": calculateMedian(of: filteredTable
@@ -182,9 +194,72 @@ class UIJoin: ObservableObject {
                 .map({ $0.Age }))
         ]
         
+        // calculate max values for each metric
+        let summaryMax =  [
+            "Pregnancies": calculateMax(of: filteredTable
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMedian(of: filteredTable
+                .map({ $0.Glucose })),
+            "BloodPressure": calculateMax(of: filteredTable
+                .map({ $0.BloodPressure })),
+            "SkinThickness": calculateMax(of: filteredTable
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMax(of: filteredTable
+                .map({ $0.Insulin })),
+            "BMI": calculateMax(of: filteredTable
+                .map({ $0.BMI })),
+            "DiabetesPedigreeFunction": calculateMax(of: filteredTable
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMax(of: filteredTable
+                .map({ $0.Age }))
+        ]
+        
+        // calculate min values for each metric
+        let summaryMin =  [
+            "Pregnancies": calculateMin(of: filteredTable
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMin(of: filteredTable
+                .map({ $0.Glucose })),
+            "BloodPressure": calculateMin(of: filteredTable
+                .map({ $0.BloodPressure })),
+            "SkinThickness": calculateMin(of: filteredTable
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMin(of: filteredTable
+                .map({ $0.Insulin })),
+            "BMI": calculateMin(of: filteredTable
+                .map({ $0.BMI })),
+            "DiabetesPedigreeFunction": calculateMin(of: filteredTable
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMin(of: filteredTable
+                .map({ $0.Age }))
+        ]
+        
         let summaryView = List {
+            // show median values
             Section(header: Text("Median Values").font(.headline)) {
-                ForEach(summary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                ForEach(summaryMedian.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key):")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0)")
+                    }
+                }
+            }
+            // show max values
+            Section(header: Text("Max Values").font(.headline)) {
+                ForEach(summaryMax.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key):")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0)")
+                    }
+                }
+            }
+            // show min values
+            Section(header: Text("Min Values").font(.headline)) {
+                ForEach(summaryMin.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
                     HStack {
                         Text("\(key):")
                             .fontWeight(.bold)

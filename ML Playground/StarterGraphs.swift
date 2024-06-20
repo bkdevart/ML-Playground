@@ -26,7 +26,8 @@ struct StarterGraphs: View {
                 controls.loadScatter()
                     .padding()
                 // summary stats
-                Group {
+                HStack {
+                    controls.summaryTable
                     controls.summaryTable
                 }
             }
@@ -62,6 +63,7 @@ struct StarterGraphs: View {
 //            controls.loadBMIFilter()
 //            controls.loadGlucoseFilter()
         })
+        .navigationTitle("Detail")
     }
 }
 

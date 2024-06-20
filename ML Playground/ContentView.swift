@@ -160,10 +160,10 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("Diabetes Test")
+            .navigationTitle("ML Model")
             .padding([.horizontal])
             .toolbar {
-                NavigationLink("Graphs", destination: StarterGraphs())
+                NavigationLink("Detail", destination: StarterGraphs())
             }
             .onAppear {
                 shared.loadData()
