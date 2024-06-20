@@ -18,8 +18,6 @@ struct StarterGraphs: View {
             
             // Scatterplot
             VStack {
-                Text("Similar Samples")
-                    .font(.largeTitle)
                 shared.loadScatter()
                     .padding()
                 // summary stats
@@ -35,10 +33,6 @@ struct StarterGraphs: View {
             
             // Bar chart
             VStack {
-                Text("Sample Counts")
-                    .font(.largeTitle)
-                Text("by Positive/Negative Outcome")
-                    .font(.subheadline)
                 // chart
                 shared.loadBar()
                     .padding()
