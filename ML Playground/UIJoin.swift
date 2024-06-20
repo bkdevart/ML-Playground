@@ -566,10 +566,12 @@ class UIJoin: ObservableObject {
             }
             .chartYScale(domain: 0...200)
             .chartLegend(legendItems)
-            .chartXAxis(.hidden)
-            .chartYAxis(.hidden)
         
-        return scatterChart
+        return VStack {
+            Text("Sample Data")
+                .font(.subheadline)
+            scatterChart
+        }
     }
     
     public func loadBar() -> some View {
@@ -602,8 +604,12 @@ class UIJoin: ObservableObject {
         .chartLegend(legendItems)
         .chartXAxis(.hidden)
         .chartYAxis(.hidden)
-        
-        return barChart
+
+        return VStack {
+            Text("Outcome Counts")
+                .font(.subheadline)
+            barChart
+        }
     }
     
     public func loadPie() -> some View {

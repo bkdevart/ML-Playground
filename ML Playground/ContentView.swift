@@ -163,7 +163,7 @@ struct ContentView: View {
 //            .navigationTitle("ML Model")
             .padding([.horizontal])
             .toolbar {
-                NavigationLink("Detail", destination: StarterGraphs())
+                NavigationLink("Stats", destination: StarterGraphs())
             }
             .onAppear {
                 shared.loadData()

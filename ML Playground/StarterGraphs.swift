@@ -66,7 +66,7 @@ struct StarterGraphs: View {
                 Text("Bar")
             }
         }
-        .navigationTitle("Detail")
+        .navigationTitle("Stats")
     }
 }
 
