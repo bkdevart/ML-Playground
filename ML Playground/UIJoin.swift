@@ -47,41 +47,6 @@ class UIJoin: ObservableObject {
         1: .blue
     ]
     
-    public func loadBMIFilter() {
-        filteredBMI = pima.filter{ $0.BMI <= filterBMI }
-    }
-    
-    public func getFilterBMITable() -> some View  {
-        let filteredTable = pima.filter { $0.id < 5 }
-        var body: some View {
-            Table(filteredTable) {
-                TableColumn("BMI", value: \.BMIString)
-                // 2nd column not visible in iOS, unless you tweak
-                // https://developer.apple.com/documentation/SwiftUI/Table
-                // TableColumn("Glucose", value: \.GlucoseString)
-            }
-        }
-        return body
-    }
-    
-    public func getBMIMean() -> String {
-        let totalSum = filteredBMI.map({$0.BMI}).reduce(0, +)
-        let totalCount = filteredBMI.count
-        let mean = String(format: "%.2f", totalSum / Float(totalCount))
-        return mean
-    }
-    
-    public func getBMICount() -> Int {
-        return filteredBMI.count
-    }
-    
-    public func getGlucoseMean() -> String {
-        let totalSum = filteredGlucose.map({$0.Glucose}).reduce(0, +)
-        let totalCount = filteredGlucose.count
-        let mean = String(format: "%.2f", totalSum / Float(totalCount))
-        return mean
-    }
-    
     public func getSampleCount() -> Int {
         return filteredTable.count
     }
@@ -94,7 +59,7 @@ class UIJoin: ObservableObject {
         return percent
     }
     
-    // TODO: write function that takes feature as parameter and calculates 1%
+    // a function that calculates 1% difference for every feature range
     public func calcFeaturePercent(percentNet: Float) {
         // Pregancy
         // Calculate ranges
@@ -175,65 +140,63 @@ class UIJoin: ObservableObject {
         // filter table data
         filteredTable = filteredTable.filter{ $0.Age <= max }
         filteredTable = filteredTable.filter{ $0.Age >= min }
-        
-//        print("Min: \(min), Max: \(max)")
-        
-        
     }
+    
+    func calculateMedian(of values: [Float]) -> Float? {
+        guard !values.isEmpty else { return nil }
+        
+        let sortedValues = values.sorted()
+        let count = sortedValues.count
+        
+        if count % 2 == 0 {
+            // If even, return the average of the two middle values
+            let middleIndex = count / 2
+            return (sortedValues[middleIndex - 1] + sortedValues[middleIndex]) / 2
+        } else {
+            // If odd, return the middle value
+            return sortedValues[count / 2]
+        }
+    }
+
     
     // Method to create a summary table
     var summaryTable: some View {
         
-        
+        // TODO: calculate median values for each metric
         let summary =  [
-            "Pregnancies": filterPregancies,
-            "Glucose": filterGlucose,
-            "BloodPressure": filterBloodPressure,
-            "SkinThickness": filterSkinThickness,
-            "Insulin": filterInsulin,
-            "BMI": filterBMI,
-            "DiabetesPedigreeFunction": filterdiabetesPedigreeFunction,
-            "Age": filterAge,
-            "BMIString": filterBMI,
-            "GlucoseString": filterGlucose
+            "Pregnancies": calculateMedian(of: filteredTable
+                .map({ $0.Pregnancies })),
+            "Glucose": calculateMedian(of: filteredTable
+                .map({ $0.Glucose })),
+            "BloodPressure": calculateMedian(of: filteredTable
+                .map({ $0.BloodPressure })),
+            "SkinThickness": calculateMedian(of: filteredTable
+                .map({ $0.SkinThickness })),
+            "Insulin": calculateMedian(of: filteredTable
+                .map({ $0.Insulin })),
+            "BMI": calculateMedian(of: filteredTable
+                .map({ $0.BMI })),
+            "DiabetesPedigreeFunction": calculateMedian(of: filteredTable
+                .map({ $0.DiabetesPedigreeFunction })),
+            "Age": calculateMedian(of: filteredTable
+                .map({ $0.Age }))
         ]
         
         let summaryView = List {
-            ForEach(summary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                HStack {
-                    Text("\(key):")
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text("\(value)")
+            Section(header: Text("Median Values").font(.headline)) {
+                ForEach(summary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key):")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value ?? 0)")
+                    }
                 }
             }
         }
-        .navigationTitle("Pima Summary")
+        .navigationTitle("Median Summary")
         
         return summaryView
-    }
-    
-    public func getFilterGlucoseTable() -> some View  {
-        let filteredTable = pima.filter { $0.id < 5 }
-        var body: some View {
-            Table(filteredTable) {
-                // String(format:"%.2f", myFloat)
-                TableColumn("Glucose", value: \.GlucoseString)
-            }
-        }
-        return body
-    }
-    
-    public func showBMI() -> some View {
-        Chart {
-            ForEach(filteredBMI) { shape in
-                PointMark(
-                    x: .value("BMI", shape.id),
-                    y: .value("Value", shape.BMI)
-                )
-                .foregroundStyle(by: .value("Diabetes", shape.Outcome))
-            }
-        }
     }
     
     public func loadScatter() -> some View {
@@ -350,23 +313,6 @@ class UIJoin: ObservableObject {
             print("decode error")
         }
     }
-
-//    private func loadJson(fromURLString urlString: String,
-//                          completion: @escaping (Result<Data, Error>) -> Void) {
-//        if let url = URL(string: urlString) {
-//            let urlSession = URLSession(configuration: .default).dataTask(with: url) { (data, response, error) in
-//                if let error = error {
-//                    completion(.failure(error))
-//                }
-//                
-//                if let data = data {
-//                    completion(.success(data))
-//                }
-//            }
-//            
-//            urlSession.resume()
-//        }
-//    }
     
     static var shared = UIJoin()
 }

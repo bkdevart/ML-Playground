@@ -19,35 +19,23 @@ struct StarterGraphs: View {
     var body: some View {
         TabView {
             
-            // summary stats
+            // Scatterplot
             VStack {
                 Text("Similar Samples")
                     .font(.largeTitle)
-                Group {
-//                    Text("Samples: \(controls.getSampleCount())")
-//                    Text("Mean: \(controls.getGlucoseMean())")
-                }
-                .font(.body)
                 controls.loadScatter()
                     .padding()
-                // Glucose chart
-//                HStack {
-//                    Text("Max value: \(String(format: "%.f", filterGlucose))")
-//                        .font(.body)
-//                    Slider(value: $filterGlucose, in: 0...200, step: 1)
-//                        .onChange(of: filterGlucose) { _ in
-//                            controls.filterGlucose = Float(filterGlucose)
-//                        }
-//                }
-//                .padding()
+                // summary stats
+                Group {
+                    controls.summaryTable
+                }
             }
-            .font(.system(size: 30, weight: .bold, design: .rounded))
             .tabItem {
                 Image(systemName: "chart.dots.scatter")
                 Text("Scatter")
             }
             
-            // BMI chart
+            // Bar chart
             VStack {
                 Text("Sample Counts")
                     .font(.largeTitle)
@@ -59,8 +47,7 @@ struct StarterGraphs: View {
                 
                 // summary stats
                 Group {
-//                    Text("Samples: \(controls.getSampleCount())")
-                    // TODO: add additional stats
+                    // add additional stats
                     controls.summaryTable
                 }
                 .font(.body)

@@ -167,8 +167,6 @@ struct ContentView: View {
             }
             .onAppear {
                 shared.loadData()
-                shared.loadBMIFilter()
-//                shared.loadFilters()
             }
         }
     }
