@@ -29,7 +29,7 @@ struct Pima: Codable, Identifiable {
 
 class UIJoin: ObservableObject {
     @Published var pima = [Pima]()
-    @Published var filteredBMI = [Pima]()
+    @Published var filteredBMI = [Pima]()  // TODO: remove this
     @Published var filteredGlucose = [Pima]()
     @Published var filteredTable = [Pima]()
     
@@ -51,22 +51,10 @@ class UIJoin: ObservableObject {
         filteredBMI = pima.filter{ $0.BMI <= filterBMI }
     }
     
-    public func loadFilters() {
-        filteredTable = pima.filter{ $0.Pregnancies <= filterPregancies }
-        filteredTable = filteredTable.filter{ $0.Glucose <= filterGlucose }
-        filteredTable = filteredTable.filter{ $0.BloodPressure <= filterBloodPressure }
-        filteredTable = filteredTable.filter{ $0.SkinThickness <= filterSkinThickness }
-        filteredTable = filteredTable.filter{ $0.Insulin <= filterInsulin }
-        filteredTable = filteredTable.filter{ $0.BMI <= filterBMI }
-        filteredTable = filteredTable.filter{ $0.DiabetesPedigreeFunction <= filterdiabetesPedigreeFunction }
-        filteredTable = filteredTable.filter{ $0.Age <= filterAge }
-    }
-    
     public func getFilterBMITable() -> some View  {
         let filteredTable = pima.filter { $0.id < 5 }
         var body: some View {
             Table(filteredTable) {
-                // String(format:"%.2f", myFloat)
                 TableColumn("BMI", value: \.BMIString)
                 // 2nd column not visible in iOS, unless you tweak
                 // https://developer.apple.com/documentation/SwiftUI/Table
@@ -193,6 +181,38 @@ class UIJoin: ObservableObject {
         
     }
     
+    // Method to create a summary table
+    var summaryTable: some View {
+        
+        
+        let summary =  [
+            "Pregnancies": filterPregancies,
+            "Glucose": filterGlucose,
+            "BloodPressure": filterBloodPressure,
+            "SkinThickness": filterSkinThickness,
+            "Insulin": filterInsulin,
+            "BMI": filterBMI,
+            "DiabetesPedigreeFunction": filterdiabetesPedigreeFunction,
+            "Age": filterAge,
+            "BMIString": filterBMI,
+            "GlucoseString": filterGlucose
+        ]
+        
+        let summaryView = List {
+            ForEach(summary.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                HStack {
+                    Text("\(key):")
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text("\(value)")
+                }
+            }
+        }
+        .navigationTitle("Pima Summary")
+        
+        return summaryView
+    }
+    
     public func getFilterGlucoseTable() -> some View  {
         let filteredTable = pima.filter { $0.id < 5 }
         var body: some View {
@@ -217,6 +237,7 @@ class UIJoin: ObservableObject {
     }
     
     public func loadScatter() -> some View {
+        
         let categoryColors: [Int: Color] = [
             0: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255),
             1: .blue

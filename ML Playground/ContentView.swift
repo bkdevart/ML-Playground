@@ -29,9 +29,10 @@ struct ContentView: View {
     @State private var BMI = 32.0
     @State private var diabetesPedigreeFunction = 0.3725
     @State private var Age = 29.0
+    @State private var sampleSize = 768
     
     let shared = UIJoin.shared
-    
+
     
     var body: some View {
         let textColor = shared.categoryColors[predictionValue, default: .black]
@@ -47,18 +48,22 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .foregroundColor(textColor)
                 HStack {
+                    // TODO: see if you can get data to load here
                     shared.loadScatter()
                     shared.loadBar()
                 }
                 VStack {
                     // TODO: add sample size # to this output
-                    Text("Near: \(String(format: "%.f", percentNear))%")
-                    Slider(value: $percentNear, in: 0...100, step: 1)
-                        .onChange(of: percentNear) { _ in
-                            shared.filterPercentNear = Float(percentNear)
-                            shared.calcFeaturePercent(percentNet: percentNear)
-                            calculateDiabetes()
-                        }
+                    Text("Sample size: \(String(format: "%.1f", (Float(shared.getSampleCount()) / 768.0) * 100))%")
+                    HStack {
+                        Text("Neighboring data")
+                        Slider(value: $percentNear, in: 0...100, step: 1)
+                            .onChange(of: percentNear) { _ in
+                                shared.filterPercentNear = Float(percentNear)
+                                shared.calcFeaturePercent(percentNet: percentNear)
+                                calculateDiabetes()
+                            }
+                    }
                 }
                 
                 Text("Choose feature values")
@@ -91,8 +96,7 @@ struct ContentView: View {
                                 Text("Blood Pressure: \(String(format: "%.f", bloodPressure))")
                                 Slider(value: $bloodPressure, in: 0...122, step: 1)
                                     .onChange(of: bloodPressure) { _ in
-                                        shared.filterBloodPressure = Float(bloodPressure)  // store value so it can be used to filter data
-                                        //                                shared.loadFilters()  // update data for graphs with filter
+                                        shared.filterBloodPressure = Float(bloodPressure)
                                         shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                         calculateDiabetes()
                                     }
@@ -103,7 +107,6 @@ struct ContentView: View {
                                 Slider(value: $skinThickness, in: 0...100, step: 0.05)
                                     .onChange(of: skinThickness) { _ in
                                         shared.filterSkinThickness = Float(skinThickness)
-                                        //                                shared.loadFilters()
                                         shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                         calculateDiabetes()
                                     }
@@ -118,7 +121,6 @@ struct ContentView: View {
                                 Slider(value: $insulin, in: 0...846, step: 5)
                                     .onChange(of: insulin) { _ in
                                         shared.filterInsulin = Float(insulin)
-                                        //                                shared.loadFilters()
                                         shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                         calculateDiabetes()
                                     }
@@ -127,9 +129,8 @@ struct ContentView: View {
                             VStack {
                                 Text("BMI: \(String(format: "%.1f", BMI))")
                                 Slider(value: $BMI, in: 0...67, step: 0.5)
-                                    .onChange(of: BMI) { _ in   // can also be newBMI in BMI if you need value
+                                    .onChange(of: BMI) { _ in
                                         shared.filterBMI = Float(BMI)
-                                        //                                shared.loadFilters()
                                         shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                         calculateDiabetes()
                                     }
@@ -140,7 +141,6 @@ struct ContentView: View {
                                 Slider(value: $diabetesPedigreeFunction, in: 0.0...2.5, step: 0.05)
                                     .onChange(of: diabetesPedigreeFunction) { _ in
                                         shared.filterdiabetesPedigreeFunction = Float(diabetesPedigreeFunction)
-                                        //                                shared.loadFilters()
                                         shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                         calculateDiabetes()
                                     }
@@ -151,7 +151,6 @@ struct ContentView: View {
                                 Slider(value: $Age, in: 21...81, step: 1)
                                     .onChange(of: Age) { _ in
                                         shared.filterAge = Float(Age)
-                                        //                                shared.loadFilters()
                                         shared.calcFeaturePercent(percentNet: shared.filterPercentNear)
                                         calculateDiabetes()
                                     }
@@ -169,7 +168,7 @@ struct ContentView: View {
             .onAppear {
                 shared.loadData()
                 shared.loadBMIFilter()
-                shared.loadFilters()
+//                shared.loadFilters()
             }
         }
     }

@@ -15,6 +15,7 @@ struct StarterGraphs: View {
     @State private var filterBMI = 32.0 // using a value that is not exceeded in chart to start, set to max later
     @State private var filterGlucose = 117.0 // ditto above
     
+    
     var body: some View {
         TabView {
             
@@ -23,61 +24,51 @@ struct StarterGraphs: View {
                 Text("Similar Samples")
                     .font(.largeTitle)
                 Group {
-                    Text("Samples: \(controls.getSampleCount())")
-                    Text("Mean: \(controls.getGlucoseMean())")
+//                    Text("Samples: \(controls.getSampleCount())")
+//                    Text("Mean: \(controls.getGlucoseMean())")
                 }
                 .font(.body)
                 controls.loadScatter()
-                controls.loadBar()
                     .padding()
                 // Glucose chart
-                HStack {
-                    Text("Max value: \(String(format: "%.f", filterGlucose))")
-                        .font(.body)
-                    Slider(value: $filterGlucose, in: 0...200, step: 1)
-                        .onChange(of: filterGlucose) { _ in
-                            controls.filterGlucose = Float(filterGlucose)  // store value so it can be used to filter data
-                            controls.loadFilters()  // update data for graphs with filter
-                        }
-                }
-                .padding()
+//                HStack {
+//                    Text("Max value: \(String(format: "%.f", filterGlucose))")
+//                        .font(.body)
+//                    Slider(value: $filterGlucose, in: 0...200, step: 1)
+//                        .onChange(of: filterGlucose) { _ in
+//                            controls.filterGlucose = Float(filterGlucose)
+//                        }
+//                }
+//                .padding()
             }
             .font(.system(size: 30, weight: .bold, design: .rounded))
             .tabItem {
                 Image(systemName: "chart.dots.scatter")
-                Text("Glucose")
+                Text("Scatter")
             }
             
             // BMI chart
             VStack {
-                Text("BMI")
+                Text("Sample Counts")
                     .font(.largeTitle)
-                // summary stats
-                Group {
-                    Text("Samples: \(controls.getBMICount())")
-                    Text("BMI Mean: \(controls.getBMIMean())")
-                }
-                .font(.body)
+                Text("by Outcome")
+                    .font(.subheadline)
                 // chart
-                controls.showBMI()
+                controls.loadBar()
                     .padding()
                 
-                // slider
-                HStack {
-                    Text("BMI: \(String(format: "%.f", filterBMI))")
-                        .font(.body)
-                    Slider(value: $filterBMI, in: 0...75, step: 1)
-                        .onChange(of: filterBMI) { _ in
-                            controls.filterBMI = Float(filterBMI)
-                            controls.loadBMIFilter()
-                        }
+                // summary stats
+                Group {
+//                    Text("Samples: \(controls.getSampleCount())")
+                    // TODO: add additional stats
+                    controls.summaryTable
                 }
-                .padding()
+                .font(.body)
             }
             .font(.system(size: 30, weight: .bold, design: .rounded))
             .tabItem {
-                Image(systemName: "chart.dots.scatter")
-                Text("BMI")
+                Image(systemName: "chart.bar")
+                Text("Bar")
             }
         }
         .onAppear(perform: {
