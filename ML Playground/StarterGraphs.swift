@@ -27,7 +27,7 @@ struct StarterGraphs: View {
                     .padding()
                 // summary stats
                 HStack {
-                    controls.summaryTable
+                    controls.userTable
                     controls.summaryTable
                 }
             }
@@ -47,8 +47,8 @@ struct StarterGraphs: View {
                     .padding()
                 
                 // summary stats
-                Group {
-                    // add additional stats
+                HStack {
+                    controls.userTable
                     controls.summaryTable
                 }
                 .font(.body)

@@ -170,25 +170,54 @@ class UIJoin: ObservableObject {
         return values.min()
     }
 
+    var userTable: some View {
+        // extract user values for each metric
+        let summaryUser =  [
+            "Pregnancy": filterPregancies,
+            "Glucose": filterGlucose,
+            "BP": filterBloodPressure,
+            "Skin": filterSkinThickness,
+            "Insulin": filterInsulin,
+            "BMI": filterBMI,
+            "DPF": filterdiabetesPedigreeFunction,
+            "Age": filterAge
+        ]
+        
+        let summaryView = List {
+            Section(header: Text("Your Values").font(.headline)) {
+                ForEach(summaryUser.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                    HStack {
+                        Text("\(key)")
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("\(value, specifier: "%.1f")")
+                    }
+                }
+            }
+        }
+        
+        return summaryView
+    }
+    
     
     // Method to create a summary table
     var summaryTable: some View {
         
         // calculate median values for each metric
         let summaryMedian =  [
-            "Pregnancies": calculateMedian(of: filteredTable
+            "Pregnancy": calculateMedian(of: filteredTable
                 .map({ $0.Pregnancies })),
             "Glucose": calculateMedian(of: filteredTable
                 .map({ $0.Glucose })),
-            "BloodPressure": calculateMedian(of: filteredTable
+            "BP": calculateMedian(of: filteredTable
                 .map({ $0.BloodPressure })),
-            "SkinThickness": calculateMedian(of: filteredTable
+            "Skin": calculateMedian(of: filteredTable
                 .map({ $0.SkinThickness })),
             "Insulin": calculateMedian(of: filteredTable
                 .map({ $0.Insulin })),
             "BMI": calculateMedian(of: filteredTable
                 .map({ $0.BMI })),
-            "DiabetesPedigreeFunction": calculateMedian(of: filteredTable
+            "DPF": calculateMedian(of: filteredTable
                 .map({ $0.DiabetesPedigreeFunction })),
             "Age": calculateMedian(of: filteredTable
                 .map({ $0.Age }))
@@ -196,19 +225,19 @@ class UIJoin: ObservableObject {
         
         // calculate max values for each metric
         let summaryMax =  [
-            "Pregnancies": calculateMax(of: filteredTable
+            "Pregnancy": calculateMax(of: filteredTable
                 .map({ $0.Pregnancies })),
             "Glucose": calculateMedian(of: filteredTable
                 .map({ $0.Glucose })),
-            "BloodPressure": calculateMax(of: filteredTable
+            "BP": calculateMax(of: filteredTable
                 .map({ $0.BloodPressure })),
-            "SkinThickness": calculateMax(of: filteredTable
+            "Skin": calculateMax(of: filteredTable
                 .map({ $0.SkinThickness })),
             "Insulin": calculateMax(of: filteredTable
                 .map({ $0.Insulin })),
             "BMI": calculateMax(of: filteredTable
                 .map({ $0.BMI })),
-            "DiabetesPedigreeFunction": calculateMax(of: filteredTable
+            "DPF": calculateMax(of: filteredTable
                 .map({ $0.DiabetesPedigreeFunction })),
             "Age": calculateMax(of: filteredTable
                 .map({ $0.Age }))
@@ -216,19 +245,19 @@ class UIJoin: ObservableObject {
         
         // calculate min values for each metric
         let summaryMin =  [
-            "Pregnancies": calculateMin(of: filteredTable
+            "Pregnancy": calculateMin(of: filteredTable
                 .map({ $0.Pregnancies })),
             "Glucose": calculateMin(of: filteredTable
                 .map({ $0.Glucose })),
-            "BloodPressure": calculateMin(of: filteredTable
+            "BP": calculateMin(of: filteredTable
                 .map({ $0.BloodPressure })),
-            "SkinThickness": calculateMin(of: filteredTable
+            "Skin": calculateMin(of: filteredTable
                 .map({ $0.SkinThickness })),
             "Insulin": calculateMin(of: filteredTable
                 .map({ $0.Insulin })),
             "BMI": calculateMin(of: filteredTable
                 .map({ $0.BMI })),
-            "DiabetesPedigreeFunction": calculateMin(of: filteredTable
+            "DPF": calculateMin(of: filteredTable
                 .map({ $0.DiabetesPedigreeFunction })),
             "Age": calculateMin(of: filteredTable
                 .map({ $0.Age }))
@@ -236,40 +265,40 @@ class UIJoin: ObservableObject {
         
         let summaryView = List {
             // show median values
-            Section(header: Text("Median Values").font(.headline)) {
+            Section(header: Text("Median").font(.headline)) {
                 ForEach(summaryMedian.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
                     HStack {
-                        Text("\(key):")
+                        Text("\(key)")
                             .fontWeight(.bold)
                         Spacer()
-                        Text("\(value ?? 0)")
+                        Text("\(value ?? 0, specifier: "%.1f")")
                     }
                 }
             }
             // show max values
-            Section(header: Text("Max Values").font(.headline)) {
+            Section(header: Text("Max").font(.headline)) {
                 ForEach(summaryMax.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
                     HStack {
-                        Text("\(key):")
+                        Text("\(key)")
                             .fontWeight(.bold)
                         Spacer()
-                        Text("\(value ?? 0)")
+                        Text("\(value ?? 0, specifier: "%.1f")")
                     }
                 }
             }
             // show min values
-            Section(header: Text("Min Values").font(.headline)) {
+            Section(header: Text("Min").font(.headline)) {
                 ForEach(summaryMin.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
                     HStack {
-                        Text("\(key):")
+                        Text("\(key)")
                             .fontWeight(.bold)
                         Spacer()
-                        Text("\(value ?? 0)")
+                        Text("\(value ?? 0, specifier: "%.1f")")
                     }
                 }
             }
         }
-        .navigationTitle("Median Summary")
+        .navigationTitle("Stat Summary")
         
         return summaryView
     }
