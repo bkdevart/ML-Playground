@@ -566,6 +566,8 @@ class UIJoin: ObservableObject {
             }
             .chartYScale(domain: 0...200)
             .chartLegend(legendItems)
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
         
         return scatterChart
     }
@@ -598,6 +600,8 @@ class UIJoin: ObservableObject {
         .chartXScale(domain: -0.5...1.5)
         .chartForegroundStyleScale(domain: categoryColors.keys.sorted(), range: categoryColors.values.sorted(by: { $0.description > $1.description }))
         .chartLegend(legendItems)
+        .chartXAxis(.hidden)
+        .chartYAxis(.hidden)
         
         return barChart
     }

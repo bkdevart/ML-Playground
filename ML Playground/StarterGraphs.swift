@@ -48,11 +48,13 @@ struct StarterGraphs: View {
                     VStack {
                         Text("Negative")
                             .font(.headline)
+                            .foregroundStyle(shared.categoryColors[0]!)
                         shared.summaryTable0
                     }
                     VStack {
                         Text("Positive")
                             .font(.headline)
+                            .foregroundStyle(shared.categoryColors[1]!)
                         shared.summaryTable1
                     }
                 }
