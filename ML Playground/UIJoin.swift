@@ -10,6 +10,35 @@ import Charts
 
 // better design pattern may be at https://www.kodeco.com/11781349-understanding-data-flow-in-swiftui
 
+
+struct LegendItem: Identifiable {
+    let id = UUID()
+    let label: String
+    let color: Color
+}
+
+extension View {
+    func chartLegend(_ items: [LegendItem]) -> some View {
+        VStack {
+            self
+            HStack {
+                ForEach(items) { item in
+                    HStack {
+                        Circle()
+                            .fill(item.color)
+                            .frame(width: 10, height: 10)
+                        Text(item.label)
+                    }
+                    .padding(.trailing, 10)
+                }
+            }
+            .padding(.top, 10)
+        }
+    }
+}
+
+
+
 struct Pima: Codable, Identifiable {
     let id: Int
     let Pregnancies: Float
@@ -518,6 +547,8 @@ class UIJoin: ObservableObject {
         return summaryView
     }
     
+
+    
     public func loadScatter() -> some View {
         
         let categoryColors: [Int: Color] = [
@@ -525,17 +556,22 @@ class UIJoin: ObservableObject {
             1: .blue
         ]
         
+        let legendItems: [LegendItem] = [
+            LegendItem(label: "0", color: categoryColors[0]!),
+            LegendItem(label: "1", color: categoryColors[1]!)
+        ]
+        
         let scatterChart = Chart {
-            ForEach(filteredTable) { shape in
-                PointMark(
-                    x: .value("Glucose", shape.id),
-                    y: .value("Value", shape.Glucose)
-                )
-                .foregroundStyle(categoryColors[Int(shape.Outcome)] ?? .black)
+                ForEach(filteredTable) { shape in
+                    PointMark(
+                        x: .value("Glucose", shape.id),
+                        y: .value("Value", shape.Glucose)
+                    )
+                    .foregroundStyle(categoryColors[Int(shape.Outcome)] ?? .black)
+                }
             }
-        }
-        .chartLegend(.hidden)
-        .chartYScale(domain: 0...200)
+            .chartYScale(domain: 0...200)
+            .chartLegend(legendItems)
         
         return scatterChart
     }
@@ -547,10 +583,9 @@ class UIJoin: ObservableObject {
                 (category: outcome, count: items.count)
             }
         
-        // define custom colors for bar chart legend
-        let categoryColors: [Int: Color] = [
-            0: .blue,
-            1: Color(red: 255 / 255, green: 190 / 255, blue: 247 / 255)
+        let legendItems: [LegendItem] = [
+            LegendItem(label: "0", color: categoryColors[0]!),
+            LegendItem(label: "1", color: categoryColors[1]!)
         ]
         
         // create barchart
@@ -568,6 +603,7 @@ class UIJoin: ObservableObject {
         }
         .chartXScale(domain: -0.5...1.5)
         .chartForegroundStyleScale(domain: categoryColors.keys.sorted(), range: categoryColors.values.sorted(by: { $0.description < $1.description }))
+        .chartLegend(legendItems)
         
         return barChart
     }
