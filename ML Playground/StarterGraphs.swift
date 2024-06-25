@@ -28,7 +28,7 @@ struct StarterGraphs: View {
             }
             .tabItem {
                 Image(systemName: "chart.dots.scatter")
-                Text("Scatter")
+                Text("Compare Selections")
             }
             
             // Bar chart
@@ -57,7 +57,7 @@ struct StarterGraphs: View {
             .font(.system(size: 30, weight: .bold, design: .rounded))
             .tabItem {
                 Image(systemName: "chart.bar")
-                Text("Bar")
+                Text("Compare Outcomes")
             }
         }
         .navigationTitle("Stats")
