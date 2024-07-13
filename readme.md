@@ -1,11 +1,16 @@
 # ML Playground
-The purpose of this app is to discover:
 
-1. How can ML models be adapted to run on the iPhone?
-1. What are intuitive ways of interacting with those models?
-1. Can a mobile app make discovering relationships with the data and machine learning model easier for both technical and non-technical users?
+The purpose of this app is to:
 
-A random forest classifier is trained on a sample of data from the well-known Pima Indians Database [here](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database).  Apple's Core ML tools library is used to translate a Python model to the Core ML format, and their documentation is [here](https://apple.github.io/coremltools/docs-guides/source/overview-coremltools.html).  The iOS app itself is written in Swift, using SwiftUI with the Charts and CoreML libaries.
+1. Deploy a ML model to run natively on the iPhone
+1. Provide an intuitive way of interacting with the ML model
+1. Display relationships with the data and machine learning model for both technical and non-technical users
+
+This project contains a random forest classifier that is trained on a sample of data from the well-known Pima Indians Database [here](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database). Apple's Core ML tools [library](https://apple.github.io/coremltools/docs-guides/source/overview-coremltools.html) is used to translate the Python model to the Core ML format.  The iOS app itself is written in Swift, using SwiftUI with the Charts and CoreML libaries.
+
+A more comprehensive article documenting this application can be found [here](https://medium.com/@brandonknox_6151/multi-touch-ml-models-572f7cb27874).
+
+![img](screenshots/glucose_slider.gif "title")
 
 # App Interface
 ## Main screen
@@ -36,3 +41,14 @@ To make edits to the model and export it in the core ML format, use the notebook
 
 ## Updating SwiftUI iOS app
 Open the ML Slide.xcodeproj using Xcode.  Import the updated `DiabetesTest.mlmodel` file into the project.
+
+# Data definitions
+
+- __Pregnacies (preg):__ Number of pregnancies the patients
+- __Body-Mass-Index (BMI)__  Measured in kg/m^2
+- __Glucose level (glu):__  Plasma glucose concentraion a 2 hours in an orgal glucose tolerance test
+- __Blood Pressure (bp):__ Diastolic blood pressure in mmHg
+- __Skin Thickness (skin):__ Triceps skin fold thicknes in mm
+- __Insulin level (insulin):__ 2-hour serum insulin (micro-U/ml)
+- __Diabetes pedigree function (dpfunc)__
+- __Age:__ (age) in Years
